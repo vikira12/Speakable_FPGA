@@ -24,3 +24,6 @@ _ide/logs/
 **/export/
 *.o
 *.d
+
+# ---- Vitis IDE 작업 기록 ----
+workspace_journal*.py
