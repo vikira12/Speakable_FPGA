@@ -27,3 +27,13 @@ _ide/logs/
 
 # ---- Vitis IDE 작업 기록 ----
 workspace_journal*.py
+
+# ---- Vitis 플랫폼: BSP 설정(yaml)만 관리, 생성 소스·라이브러리는 제외 ----
+Speakable_vitis/**/bsp/libsrc/
+Speakable_vitis/**/bsp/include/
+Speakable_vitis/**/bsp/lib/
+Speakable_vitis/**/zynq_fsbl_bsp/libsrc/
+Speakable_vitis/**/zynq_fsbl_bsp/include/
+Speakable_vitis/**/zynq_fsbl_bsp/lib/
+Speakable_vitis/app_component/_ide/bitstream/
+Speakable_vitis/app_component/_ide/psinit/
