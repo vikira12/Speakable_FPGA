@@ -1,21 +1,26 @@
-# Ignore build output directory
-/build
-/export
+# ---- 공통 ----
+*.log
+*.jou
+*.str
+.Xil/
 
-# Ignore object files and dependent files
-.o
-.d
+# ---- Vivado: 프로젝트(.xpr), 블록 디자인(.srcs), xsa만 관리 ----
+Speakable_vivado/**/*.cache/
+Speakable_vivado/**/*.gen/
+Speakable_vivado/**/*.hw/
+Speakable_vivado/**/*.ip_user_files/
+Speakable_vivado/**/*.runs/
+Speakable_vivado/**/*.sim/
 
-#Ignore logs folder and log files
-/logs
-.log
+# ---- Vitis HLS: 소스·설정만 관리 (합성 결과 IP는 speakable_cnn_ip에 있음) ----
+Speakable_vitis/speakable_cnn_hls/speakable_cnn_top/
+.cache/
+compile_commands.json
 
-#Ignore lock files
-.lock
-
-.bin
-.pdi
-.vitisWorkspace.json
-
-_ide/logs
-_ide/.wsdata
+# ---- Vitis IDE / 앞으로 만들 플랫폼·앱의 빌드 산출물 ----
+_ide/.wsdata/
+_ide/logs/
+**/build/
+**/export/
+*.o
+*.d
