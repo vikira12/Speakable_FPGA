@@ -7,6 +7,7 @@ FPGA 이식 시 이 구현이 기준값(골든 모델)이 된다.
 src/        C 코드 (PC·보드 공용)
             speakable_frontend.c  전처리 (HPF, 이득, STFT, Mel, 64프레임 축소, log, 정규화, 양자화)
             speakable_model.c     CNN 정수 추론, L2 정규화
+            speakable_match.c     대표 벡터 매칭, 3단계 판정, 혼동 표현 지정, 확인 기반 적응
             *_test.c              테스트 벡터 비교 (SPK_ON_BOARD 정의 시 시간 측정)
 tools/      import_ai_artifacts.py AI 팀 산출물 → 아래 파일 규약으로 변환
             ref_model.py / ref_frontend.py  정수 추론·전처리 참조 구현 (numpy)
@@ -60,5 +61,11 @@ gcc -std=c99 -O2 -Isrc -Igenerated src/speakable_model.c src/speakable_test.c -l
 ```bash
 gcc -std=c99 -O2 -Isrc -Igenerated src/speakable_frontend.c src/speakable_model.c src/speakable_frontend_test.c -lm -o fe_test
 ```
+
+```bash
+gcc -std=c99 -O2 -Isrc src/speakable_match.c src/speakable_match_test.c -lm -o match_test
+```
+
+매칭 파라미터(`SPK_MATCH_PARAMS_PLACEHOLDER`)는 AI 팀 보정 전 임시값이다. Threshold·Margin·즉시 출력 기준이 확정되면 교체한다.
 
 보드: Vitis 앱에 `src/`의 `.c/.h`(테스트 main은 하나만)와 `generated/*.h`를 넣고 `-DSPK_ON_BOARD`를 추가하면 단계별 시간도 출력된다.
