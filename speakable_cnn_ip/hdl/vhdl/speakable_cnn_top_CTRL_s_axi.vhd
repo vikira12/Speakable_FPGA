@@ -11,7 +11,7 @@ use IEEE.NUMERIC_STD.all;
 
 entity speakable_cnn_top_CTRL_s_axi is
 generic (
-    C_S_AXI_ADDR_WIDTH    : INTEGER := 7;
+    C_S_AXI_ADDR_WIDTH    : INTEGER := 8;
     C_S_AXI_DATA_WIDTH    : INTEGER := 32);
 port (
     ACLK                  :in   STD_LOGIC;
@@ -38,11 +38,15 @@ port (
     ifmap                 :out  STD_LOGIC_VECTOR(63 downto 0);
     weight                :out  STD_LOGIC_VECTOR(63 downto 0);
     bias                  :out  STD_LOGIC_VECTOR(63 downto 0);
+    mult                  :out  STD_LOGIC_VECTOR(63 downto 0);
+    shift                 :out  STD_LOGIC_VECTOR(63 downto 0);
     ofmap                 :out  STD_LOGIC_VECTOR(63 downto 0);
     in_h                  :out  STD_LOGIC_VECTOR(7 downto 0);
     in_w                  :out  STD_LOGIC_VECTOR(7 downto 0);
     in_ch                 :out  STD_LOGIC_VECTOR(7 downto 0);
     out_ch                :out  STD_LOGIC_VECTOR(7 downto 0);
+    layer_type            :out  STD_LOGIC_VECTOR(1 downto 0);
+    stride                :out  STD_LOGIC_VECTOR(1 downto 0);
     do_relu               :out  STD_LOGIC_VECTOR(0 downto 0);
     do_pool               :out  STD_LOGIC_VECTOR(0 downto 0);
     perf                  :in   STD_LOGIC_VECTOR(95 downto 0);
@@ -91,42 +95,60 @@ end entity speakable_cnn_top_CTRL_s_axi;
 -- 0x2c : Data signal of bias
 --        bit 31~0 - bias[63:32] (Read/Write)
 -- 0x30 : reserved
--- 0x34 : Data signal of ofmap
---        bit 31~0 - ofmap[31:0] (Read/Write)
--- 0x38 : Data signal of ofmap
---        bit 31~0 - ofmap[63:32] (Read/Write)
+-- 0x34 : Data signal of mult
+--        bit 31~0 - mult[31:0] (Read/Write)
+-- 0x38 : Data signal of mult
+--        bit 31~0 - mult[63:32] (Read/Write)
 -- 0x3c : reserved
--- 0x40 : Data signal of in_h
+-- 0x40 : Data signal of shift
+--        bit 31~0 - shift[31:0] (Read/Write)
+-- 0x44 : Data signal of shift
+--        bit 31~0 - shift[63:32] (Read/Write)
+-- 0x48 : reserved
+-- 0x4c : Data signal of ofmap
+--        bit 31~0 - ofmap[31:0] (Read/Write)
+-- 0x50 : Data signal of ofmap
+--        bit 31~0 - ofmap[63:32] (Read/Write)
+-- 0x54 : reserved
+-- 0x58 : Data signal of in_h
 --        bit 7~0 - in_h[7:0] (Read/Write)
 --        others  - reserved
--- 0x44 : reserved
--- 0x48 : Data signal of in_w
+-- 0x5c : reserved
+-- 0x60 : Data signal of in_w
 --        bit 7~0 - in_w[7:0] (Read/Write)
 --        others  - reserved
--- 0x4c : reserved
--- 0x50 : Data signal of in_ch
+-- 0x64 : reserved
+-- 0x68 : Data signal of in_ch
 --        bit 7~0 - in_ch[7:0] (Read/Write)
 --        others  - reserved
--- 0x54 : reserved
--- 0x58 : Data signal of out_ch
+-- 0x6c : reserved
+-- 0x70 : Data signal of out_ch
 --        bit 7~0 - out_ch[7:0] (Read/Write)
 --        others  - reserved
--- 0x5c : reserved
--- 0x60 : Data signal of do_relu
+-- 0x74 : reserved
+-- 0x78 : Data signal of layer_type
+--        bit 1~0 - layer_type[1:0] (Read/Write)
+--        others  - reserved
+-- 0x7c : reserved
+-- 0x80 : Data signal of stride
+--        bit 1~0 - stride[1:0] (Read/Write)
+--        others  - reserved
+-- 0x84 : reserved
+-- 0x88 : Data signal of do_relu
 --        bit 0  - do_relu[0] (Read/Write)
 --        others - reserved
--- 0x64 : reserved
--- 0x68 : Data signal of do_pool
+-- 0x8c : reserved
+-- 0x90 : Data signal of do_pool
 --        bit 0  - do_pool[0] (Read/Write)
 --        others - reserved
--- 0x6c : reserved
--- 0x70 : Data signal of perf
+-- 0x94 : reserved
+-- 0x98 : Data signal of perf
 --        bit 31~0 - perf[31:0] (Read)
--- 0x74 : Data signal of perf
+-- 0x9c : Data signal of perf
 --        bit 31~0 - perf[63:32] (Read)
--- 0x78 : Data signal of perf
+-- 0xa0 : Data signal of perf
 --        bit 31~0 - perf[95:64] (Read)
--- 0x7c : Control signal of perf
+-- 0xa4 : Control signal of perf
 --        bit 0  - perf_ap_vld (Read/COR)
 --        others - reserved
 -- (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
@@ -138,39 +160,49 @@ attribute DowngradeIPIdentifiedWarnings of behave : architecture is "yes";
     signal wstate  : states := wrreset;
     signal rstate  : states := rdreset;
     signal wnext, rnext: states;
-    constant ADDR_AP_CTRL        : INTEGER := 16#00#;
-    constant ADDR_GIE            : INTEGER := 16#04#;
-    constant ADDR_IER            : INTEGER := 16#08#;
-    constant ADDR_ISR            : INTEGER := 16#0c#;
-    constant ADDR_IFMAP_DATA_0   : INTEGER := 16#10#;
-    constant ADDR_IFMAP_DATA_1   : INTEGER := 16#14#;
-    constant ADDR_IFMAP_CTRL     : INTEGER := 16#18#;
-    constant ADDR_WEIGHT_DATA_0  : INTEGER := 16#1c#;
-    constant ADDR_WEIGHT_DATA_1  : INTEGER := 16#20#;
-    constant ADDR_WEIGHT_CTRL    : INTEGER := 16#24#;
-    constant ADDR_BIAS_DATA_0    : INTEGER := 16#28#;
-    constant ADDR_BIAS_DATA_1    : INTEGER := 16#2c#;
-    constant ADDR_BIAS_CTRL      : INTEGER := 16#30#;
-    constant ADDR_OFMAP_DATA_0   : INTEGER := 16#34#;
-    constant ADDR_OFMAP_DATA_1   : INTEGER := 16#38#;
-    constant ADDR_OFMAP_CTRL     : INTEGER := 16#3c#;
-    constant ADDR_IN_H_DATA_0    : INTEGER := 16#40#;
-    constant ADDR_IN_H_CTRL      : INTEGER := 16#44#;
-    constant ADDR_IN_W_DATA_0    : INTEGER := 16#48#;
-    constant ADDR_IN_W_CTRL      : INTEGER := 16#4c#;
-    constant ADDR_IN_CH_DATA_0   : INTEGER := 16#50#;
-    constant ADDR_IN_CH_CTRL     : INTEGER := 16#54#;
-    constant ADDR_OUT_CH_DATA_0  : INTEGER := 16#58#;
-    constant ADDR_OUT_CH_CTRL    : INTEGER := 16#5c#;
-    constant ADDR_DO_RELU_DATA_0 : INTEGER := 16#60#;
-    constant ADDR_DO_RELU_CTRL   : INTEGER := 16#64#;
-    constant ADDR_DO_POOL_DATA_0 : INTEGER := 16#68#;
-    constant ADDR_DO_POOL_CTRL   : INTEGER := 16#6c#;
-    constant ADDR_PERF_DATA_0    : INTEGER := 16#70#;
-    constant ADDR_PERF_DATA_1    : INTEGER := 16#74#;
-    constant ADDR_PERF_DATA_2    : INTEGER := 16#78#;
-    constant ADDR_PERF_CTRL      : INTEGER := 16#7c#;
-    constant ADDR_BITS         : INTEGER := 7;
+    constant ADDR_AP_CTRL           : INTEGER := 16#00#;
+    constant ADDR_GIE               : INTEGER := 16#04#;
+    constant ADDR_IER               : INTEGER := 16#08#;
+    constant ADDR_ISR               : INTEGER := 16#0c#;
+    constant ADDR_IFMAP_DATA_0      : INTEGER := 16#10#;
+    constant ADDR_IFMAP_DATA_1      : INTEGER := 16#14#;
+    constant ADDR_IFMAP_CTRL        : INTEGER := 16#18#;
+    constant ADDR_WEIGHT_DATA_0     : INTEGER := 16#1c#;
+    constant ADDR_WEIGHT_DATA_1     : INTEGER := 16#20#;
+    constant ADDR_WEIGHT_CTRL       : INTEGER := 16#24#;
+    constant ADDR_BIAS_DATA_0       : INTEGER := 16#28#;
+    constant ADDR_BIAS_DATA_1       : INTEGER := 16#2c#;
+    constant ADDR_BIAS_CTRL         : INTEGER := 16#30#;
+    constant ADDR_MULT_DATA_0       : INTEGER := 16#34#;
+    constant ADDR_MULT_DATA_1       : INTEGER := 16#38#;
+    constant ADDR_MULT_CTRL         : INTEGER := 16#3c#;
+    constant ADDR_SHIFT_DATA_0      : INTEGER := 16#40#;
+    constant ADDR_SHIFT_DATA_1      : INTEGER := 16#44#;
+    constant ADDR_SHIFT_CTRL        : INTEGER := 16#48#;
+    constant ADDR_OFMAP_DATA_0      : INTEGER := 16#4c#;
+    constant ADDR_OFMAP_DATA_1      : INTEGER := 16#50#;
+    constant ADDR_OFMAP_CTRL        : INTEGER := 16#54#;
+    constant ADDR_IN_H_DATA_0       : INTEGER := 16#58#;
+    constant ADDR_IN_H_CTRL         : INTEGER := 16#5c#;
+    constant ADDR_IN_W_DATA_0       : INTEGER := 16#60#;
+    constant ADDR_IN_W_CTRL         : INTEGER := 16#64#;
+    constant ADDR_IN_CH_DATA_0      : INTEGER := 16#68#;
+    constant ADDR_IN_CH_CTRL        : INTEGER := 16#6c#;
+    constant ADDR_OUT_CH_DATA_0     : INTEGER := 16#70#;
+    constant ADDR_OUT_CH_CTRL       : INTEGER := 16#74#;
+    constant ADDR_LAYER_TYPE_DATA_0 : INTEGER := 16#78#;
+    constant ADDR_LAYER_TYPE_CTRL   : INTEGER := 16#7c#;
+    constant ADDR_STRIDE_DATA_0     : INTEGER := 16#80#;
+    constant ADDR_STRIDE_CTRL       : INTEGER := 16#84#;
+    constant ADDR_DO_RELU_DATA_0    : INTEGER := 16#88#;
+    constant ADDR_DO_RELU_CTRL      : INTEGER := 16#8c#;
+    constant ADDR_DO_POOL_DATA_0    : INTEGER := 16#90#;
+    constant ADDR_DO_POOL_CTRL      : INTEGER := 16#94#;
+    constant ADDR_PERF_DATA_0       : INTEGER := 16#98#;
+    constant ADDR_PERF_DATA_1       : INTEGER := 16#9c#;
+    constant ADDR_PERF_DATA_2       : INTEGER := 16#a0#;
+    constant ADDR_PERF_CTRL         : INTEGER := 16#a4#;
+    constant ADDR_BITS         : INTEGER := 8;
 
     signal AWREADY_t           : STD_LOGIC;
     signal WREADY_t            : STD_LOGIC;
@@ -202,11 +234,15 @@ attribute DowngradeIPIdentifiedWarnings of behave : architecture is "yes";
     signal int_ifmap           : UNSIGNED(63 downto 0) := (others => '0');
     signal int_weight          : UNSIGNED(63 downto 0) := (others => '0');
     signal int_bias            : UNSIGNED(63 downto 0) := (others => '0');
+    signal int_mult            : UNSIGNED(63 downto 0) := (others => '0');
+    signal int_shift           : UNSIGNED(63 downto 0) := (others => '0');
     signal int_ofmap           : UNSIGNED(63 downto 0) := (others => '0');
     signal int_in_h            : UNSIGNED(7 downto 0) := (others => '0');
     signal int_in_w            : UNSIGNED(7 downto 0) := (others => '0');
     signal int_in_ch           : UNSIGNED(7 downto 0) := (others => '0');
     signal int_out_ch          : UNSIGNED(7 downto 0) := (others => '0');
+    signal int_layer_type      : UNSIGNED(1 downto 0) := (others => '0');
+    signal int_stride          : UNSIGNED(1 downto 0) := (others => '0');
     signal int_do_relu         : UNSIGNED(0 downto 0) := (others => '0');
     signal int_do_pool         : UNSIGNED(0 downto 0) := (others => '0');
     signal int_perf_ap_vld     : STD_LOGIC;
@@ -352,6 +388,14 @@ begin
                         rdata_data <= RESIZE(int_bias(31 downto 0), 32);
                     when ADDR_BIAS_DATA_1 =>
                         rdata_data <= RESIZE(int_bias(63 downto 32), 32);
+                    when ADDR_MULT_DATA_0 =>
+                        rdata_data <= RESIZE(int_mult(31 downto 0), 32);
+                    when ADDR_MULT_DATA_1 =>
+                        rdata_data <= RESIZE(int_mult(63 downto 32), 32);
+                    when ADDR_SHIFT_DATA_0 =>
+                        rdata_data <= RESIZE(int_shift(31 downto 0), 32);
+                    when ADDR_SHIFT_DATA_1 =>
+                        rdata_data <= RESIZE(int_shift(63 downto 32), 32);
                     when ADDR_OFMAP_DATA_0 =>
                         rdata_data <= RESIZE(int_ofmap(31 downto 0), 32);
                     when ADDR_OFMAP_DATA_1 =>
@@ -364,6 +408,10 @@ begin
                         rdata_data <= RESIZE(int_in_ch(7 downto 0), 32);
                     when ADDR_OUT_CH_DATA_0 =>
                         rdata_data <= RESIZE(int_out_ch(7 downto 0), 32);
+                    when ADDR_LAYER_TYPE_DATA_0 =>
+                        rdata_data <= RESIZE(int_layer_type(1 downto 0), 32);
+                    when ADDR_STRIDE_DATA_0 =>
+                        rdata_data <= RESIZE(int_stride(1 downto 0), 32);
                     when ADDR_DO_RELU_DATA_0 =>
                         rdata_data <= RESIZE(int_do_relu(0 downto 0), 32);
                     when ADDR_DO_POOL_DATA_0 =>
@@ -393,11 +441,15 @@ begin
     ifmap                <= STD_LOGIC_VECTOR(int_ifmap);
     weight               <= STD_LOGIC_VECTOR(int_weight);
     bias                 <= STD_LOGIC_VECTOR(int_bias);
+    mult                 <= STD_LOGIC_VECTOR(int_mult);
+    shift                <= STD_LOGIC_VECTOR(int_shift);
     ofmap                <= STD_LOGIC_VECTOR(int_ofmap);
     in_h                 <= STD_LOGIC_VECTOR(int_in_h);
     in_w                 <= STD_LOGIC_VECTOR(int_in_w);
     in_ch                <= STD_LOGIC_VECTOR(int_in_ch);
     out_ch               <= STD_LOGIC_VECTOR(int_out_ch);
+    layer_type           <= STD_LOGIC_VECTOR(int_layer_type);
+    stride               <= STD_LOGIC_VECTOR(int_stride);
     do_relu              <= STD_LOGIC_VECTOR(int_do_relu);
     do_pool              <= STD_LOGIC_VECTOR(int_do_pool);
 
@@ -653,6 +705,58 @@ begin
     begin
         if (ACLK'event and ACLK = '1') then
             if (ARESET = '1') then
+                int_mult(31 downto 0) <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (w_hs = '1' and waddr = ADDR_MULT_DATA_0) then
+                    int_mult(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_mult(31 downto 0));
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_mult(63 downto 32) <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (w_hs = '1' and waddr = ADDR_MULT_DATA_1) then
+                    int_mult(63 downto 32) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_mult(63 downto 32));
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_shift(31 downto 0) <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (w_hs = '1' and waddr = ADDR_SHIFT_DATA_0) then
+                    int_shift(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_shift(31 downto 0));
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_shift(63 downto 32) <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (w_hs = '1' and waddr = ADDR_SHIFT_DATA_1) then
+                    int_shift(63 downto 32) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_shift(63 downto 32));
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
                 int_ofmap(31 downto 0) <= (others => '0');
             elsif (ACLK_EN = '1') then
                 if (w_hs = '1' and waddr = ADDR_OFMAP_DATA_0) then
@@ -722,6 +826,32 @@ begin
             elsif (ACLK_EN = '1') then
                 if (w_hs = '1' and waddr = ADDR_OUT_CH_DATA_0) then
                     int_out_ch(7 downto 0) <= (UNSIGNED(WDATA(7 downto 0)) and wmask(7 downto 0)) or ((not wmask(7 downto 0)) and int_out_ch(7 downto 0));
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_layer_type(1 downto 0) <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (w_hs = '1' and waddr = ADDR_LAYER_TYPE_DATA_0) then
+                    int_layer_type(1 downto 0) <= (UNSIGNED(WDATA(1 downto 0)) and wmask(1 downto 0)) or ((not wmask(1 downto 0)) and int_layer_type(1 downto 0));
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_stride(1 downto 0) <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (w_hs = '1' and waddr = ADDR_STRIDE_DATA_0) then
+                    int_stride(1 downto 0) <= (UNSIGNED(WDATA(1 downto 0)) and wmask(1 downto 0)) or ((not wmask(1 downto 0)) and int_stride(1 downto 0));
                 end if;
             end if;
         end if;

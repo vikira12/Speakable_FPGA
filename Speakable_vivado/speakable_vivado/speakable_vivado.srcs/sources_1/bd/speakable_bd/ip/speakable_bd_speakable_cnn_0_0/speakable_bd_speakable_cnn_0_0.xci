@@ -4,7 +4,7 @@
     "xci_name": "speakable_bd_speakable_cnn_0_0",
     "cell_name": "speakable_cnn_0",
     "component_reference": "xilinx.com:hls:speakable_cnn_top:1.0",
-    "ip_revision": "2114816319",
+    "ip_revision": "2114818863",
     "gen_directory": "../../../../../../speakable_vivado.gen/sources_1/bd/speakable_bd/ip/speakable_bd_speakable_cnn_0_0",
     "parameters": {
       "component_parameters": {
@@ -36,11 +36,11 @@
         "clk_period": [ { "value": "10", "enabled": false, "usage": "all" } ],
         "machine": [ { "value": "64", "enabled": false, "usage": "all" } ],
         "combinational": [ { "value": "0", "enabled": false, "usage": "all" } ],
-        "latency": [ { "value": "167", "enabled": false, "usage": "all" } ],
-        "II": [ { "value": "168 ~ 2589042", "enabled": false, "usage": "all" } ]
+        "latency": [ { "value": "178", "enabled": false, "usage": "all" } ],
+        "II": [ { "value": "179 ~ 2589747", "enabled": false, "usage": "all" } ]
       },
       "model_parameters": {
-        "C_S_AXI_CTRL_ADDR_WIDTH": [ { "value": "7", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+        "C_S_AXI_CTRL_ADDR_WIDTH": [ { "value": "8", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_S_AXI_CTRL_DATA_WIDTH": [ { "value": "32", "format": "long", "usage": "all" } ],
         "C_M_AXI_GMEM0_ID_WIDTH": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
         "C_M_AXI_GMEM0_ADDR_WIDTH": [ { "value": "64", "format": "long", "usage": "all" } ],
@@ -80,7 +80,7 @@
       },
       "runtime_parameters": {
         "IPCONTEXT": [ { "value": "IP_Integrator" } ],
-        "IPREVISION": [ { "value": "2114816319" } ],
+        "IPREVISION": [ { "value": "2114818863" } ],
         "MANAGED": [ { "value": "TRUE" } ],
         "OUTPUTDIR": [ { "value": "../../../../../../speakable_vivado.gen/sources_1/bd/speakable_bd/ip/speakable_bd_speakable_cnn_0_0" } ],
         "SELECTEDSIMMODEL": [ { "value": "" } ],
@@ -91,10 +91,10 @@
     },
     "boundary": {
       "ports": {
-        "s_axi_CTRL_ARADDR": [ { "direction": "in", "size_left": "6", "size_right": "0" } ],
+        "s_axi_CTRL_ARADDR": [ { "direction": "in", "size_left": "7", "size_right": "0" } ],
         "s_axi_CTRL_ARREADY": [ { "direction": "out" } ],
         "s_axi_CTRL_ARVALID": [ { "direction": "in" } ],
-        "s_axi_CTRL_AWADDR": [ { "direction": "in", "size_left": "6", "size_right": "0" } ],
+        "s_axi_CTRL_AWADDR": [ { "direction": "in", "size_left": "7", "size_right": "0" } ],
         "s_axi_CTRL_AWREADY": [ { "direction": "out" } ],
         "s_axi_CTRL_AWVALID": [ { "direction": "in" } ],
         "s_axi_CTRL_BREADY": [ { "direction": "in" } ],
@@ -199,7 +199,7 @@
           "mode": "slave",
           "memory_map_ref": "s_axi_CTRL",
           "parameters": {
-            "ADDR_WIDTH": [ { "value": "7", "value_src": "constant", "value_permission": "bd_and_user", "usage": "all" } ],
+            "ADDR_WIDTH": [ { "value": "8", "value_src": "constant", "value_permission": "bd_and_user", "usage": "all" } ],
             "DATA_WIDTH": [ { "value": "32", "value_src": "constant", "value_permission": "bd_and_user", "usage": "all" } ],
             "PROTOCOL": [ { "value": "AXI4LITE", "value_src": "constant", "value_permission": "bd_and_user", "usage": "all" } ],
             "READ_WRITE_MODE": [ { "value": "READ_WRITE", "value_src": "constant", "value_permission": "bd_and_user", "usage": "all" } ],
@@ -721,8 +721,72 @@
                     }
                   }
                 },
-                "ofmap_1": {
+                "mult_1": {
                   "address_offset": "52",
+                  "size": 32,
+                  "display_name": "mult_1",
+                  "description": "Data signal of mult",
+                  "access": "write-only",
+                  "reset_value": "0",
+                  "fields": {
+                    "mult": {
+                      "bit_offset": 0,
+                      "bit_width": 32,
+                      "description": "Bit 31 to 0 of mult",
+                      "access": "write-only"
+                    }
+                  }
+                },
+                "mult_2": {
+                  "address_offset": "56",
+                  "size": 32,
+                  "display_name": "mult_2",
+                  "description": "Data signal of mult",
+                  "access": "write-only",
+                  "reset_value": "0",
+                  "fields": {
+                    "mult": {
+                      "bit_offset": 0,
+                      "bit_width": 32,
+                      "description": "Bit 63 to 32 of mult",
+                      "access": "write-only"
+                    }
+                  }
+                },
+                "shift_1": {
+                  "address_offset": "64",
+                  "size": 32,
+                  "display_name": "shift_1",
+                  "description": "Data signal of shift",
+                  "access": "write-only",
+                  "reset_value": "0",
+                  "fields": {
+                    "shift": {
+                      "bit_offset": 0,
+                      "bit_width": 32,
+                      "description": "Bit 31 to 0 of shift",
+                      "access": "write-only"
+                    }
+                  }
+                },
+                "shift_2": {
+                  "address_offset": "68",
+                  "size": 32,
+                  "display_name": "shift_2",
+                  "description": "Data signal of shift",
+                  "access": "write-only",
+                  "reset_value": "0",
+                  "fields": {
+                    "shift": {
+                      "bit_offset": 0,
+                      "bit_width": 32,
+                      "description": "Bit 63 to 32 of shift",
+                      "access": "write-only"
+                    }
+                  }
+                },
+                "ofmap_1": {
+                  "address_offset": "76",
                   "size": 32,
                   "display_name": "ofmap_1",
                   "description": "Data signal of ofmap",
@@ -738,7 +802,7 @@
                   }
                 },
                 "ofmap_2": {
-                  "address_offset": "56",
+                  "address_offset": "80",
                   "size": 32,
                   "display_name": "ofmap_2",
                   "description": "Data signal of ofmap",
@@ -754,7 +818,7 @@
                   }
                 },
                 "in_h": {
-                  "address_offset": "64",
+                  "address_offset": "88",
                   "size": 32,
                   "display_name": "in_h",
                   "description": "Data signal of in_h",
@@ -776,7 +840,7 @@
                   }
                 },
                 "in_w": {
-                  "address_offset": "72",
+                  "address_offset": "96",
                   "size": 32,
                   "display_name": "in_w",
                   "description": "Data signal of in_w",
@@ -798,7 +862,7 @@
                   }
                 },
                 "in_ch": {
-                  "address_offset": "80",
+                  "address_offset": "104",
                   "size": 32,
                   "display_name": "in_ch",
                   "description": "Data signal of in_ch",
@@ -820,7 +884,7 @@
                   }
                 },
                 "out_ch": {
-                  "address_offset": "88",
+                  "address_offset": "112",
                   "size": 32,
                   "display_name": "out_ch",
                   "description": "Data signal of out_ch",
@@ -841,8 +905,52 @@
                     }
                   }
                 },
+                "layer_type": {
+                  "address_offset": "120",
+                  "size": 32,
+                  "display_name": "layer_type",
+                  "description": "Data signal of layer_type",
+                  "access": "write-only",
+                  "reset_value": "0",
+                  "fields": {
+                    "layer_type": {
+                      "bit_offset": 0,
+                      "bit_width": 2,
+                      "description": "Bit 1 to 0 of layer_type",
+                      "access": "write-only"
+                    },
+                    "RESERVED": {
+                      "bit_offset": 2,
+                      "bit_width": 30,
+                      "description": "Reserved.  0s on read.",
+                      "access": "read-only"
+                    }
+                  }
+                },
+                "stride": {
+                  "address_offset": "128",
+                  "size": 32,
+                  "display_name": "stride",
+                  "description": "Data signal of stride",
+                  "access": "write-only",
+                  "reset_value": "0",
+                  "fields": {
+                    "stride": {
+                      "bit_offset": 0,
+                      "bit_width": 2,
+                      "description": "Bit 1 to 0 of stride",
+                      "access": "write-only"
+                    },
+                    "RESERVED": {
+                      "bit_offset": 2,
+                      "bit_width": 30,
+                      "description": "Reserved.  0s on read.",
+                      "access": "read-only"
+                    }
+                  }
+                },
                 "do_relu": {
-                  "address_offset": "96",
+                  "address_offset": "136",
                   "size": 32,
                   "display_name": "do_relu",
                   "description": "Data signal of do_relu",
@@ -864,7 +972,7 @@
                   }
                 },
                 "do_pool": {
-                  "address_offset": "104",
+                  "address_offset": "144",
                   "size": 32,
                   "display_name": "do_pool",
                   "description": "Data signal of do_pool",
@@ -886,7 +994,7 @@
                   }
                 },
                 "perf_1": {
-                  "address_offset": "112",
+                  "address_offset": "152",
                   "size": 32,
                   "display_name": "perf_1",
                   "description": "Data signal of perf",
@@ -902,7 +1010,7 @@
                   }
                 },
                 "perf_2": {
-                  "address_offset": "116",
+                  "address_offset": "156",
                   "size": 32,
                   "display_name": "perf_2",
                   "description": "Data signal of perf",
@@ -918,7 +1026,7 @@
                   }
                 },
                 "perf_3": {
-                  "address_offset": "120",
+                  "address_offset": "160",
                   "size": 32,
                   "display_name": "perf_3",
                   "description": "Data signal of perf",
@@ -934,7 +1042,7 @@
                   }
                 },
                 "perf_ctrl": {
-                  "address_offset": "124",
+                  "address_offset": "164",
                   "size": 32,
                   "display_name": "perf_ctrl",
                   "description": "Control signal of perf",
@@ -962,5 +1070,5 @@
       }
     }
   },
-  "checksum": "7aa51fe8"
+  "checksum": "97f926f9"
 }

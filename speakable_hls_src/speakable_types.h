@@ -21,8 +21,11 @@ typedef ap_uint<64> word_t;
 //
 // DDR 메모리 배치는 항상 MAX 크기 기준 (패딩 포함):
 //   ifmap/ofmap : int8 [MAX_IN_CH][MAX_IMG_H][MAX_IMG_W]   (행 하나 = 64바이트)
-//   weight      : int8 [MAX_OUT_CH][MAX_IN_CH][KSIZE][KSIZE]
-//   bias        : int32[MAX_OUT_CH]
+//   weight      : 출력 채널마다 576바이트 칸 (oc × 576부터), 칸 안의 배치는 레이어 종류별로 다름
+//                   CONV3X3 [IC][3][3]  (in_ch × 9바이트)
+//                   DW3X3   [3][3]      (9바이트, 입력 채널 = 출력 채널)
+//                   PW1X1   [IC]        (in_ch 바이트)
+//   bias, mult, shift : int32[MAX_OUT_CH]   (재양자화: 출력 채널별 multiplier·shift)
 // ----------------------------------------------------------------------
 #define MAX_IMG_H     64
 #define MAX_IMG_W     64
@@ -48,15 +51,23 @@ typedef ap_uint<64> word_t;
 
 // 출력 행 타일 높이. 입력은 위아래 패딩 포함 TH+2 행만 온칩에 올림
 // (풀링이 타일 안에서 끝나도록 반드시 짝수)
+// stride 2일 때는 출력 TH/2행 → 입력 (TH/2−1)×2+3 = 9행이라 같은 버퍼에 들어감
 #define TH            8
 #define BAND_ROWS     (TH + 2)
+
+// ----------------------------------------------------------------------
+// 레이어 종류 (layer_type 레지스터)
+// ----------------------------------------------------------------------
+#define LAYER_CONV3X3 0      // 일반 3×3 컨볼루션, padding 1
+#define LAYER_DW3X3   1      // depthwise 3×3, padding 1 (in_ch = out_ch)
+#define LAYER_PW1X1   2      // pointwise 1×1, padding 0
 
 // ----------------------------------------------------------------------
 // 성능 카운터를 담는 구조체 (AXI4-Lite로 PS에 노출됨)
 // ----------------------------------------------------------------------
 struct perf_counters_t {
     ap_uint<32> cycle_count;   // 연산 파이프라인 반복 횟수 (II=1이므로 연산 구간 사이클 수와 같음, 로드/저장 제외)
-    ap_uint<32> mac_count;     // 패딩을 제외하고 실제 의미 있는 MAC(곱셈-누산) 연산 횟수
+    ap_uint<32> mac_count;     // 패딩을 포함한 명목 MAC 수 (출력 픽셀 × 출력 채널 × 탭 × 입력 채널)
     ap_uint<32> invoke_count;  // 누적 호출 횟수 (재시작 전까지 유지, FPS 계산용)
 };
 

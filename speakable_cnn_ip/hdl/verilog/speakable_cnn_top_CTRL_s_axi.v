@@ -8,7 +8,7 @@
 `timescale 1ns/1ps
 (* DowngradeIPIdentifiedWarnings="yes" *) module speakable_cnn_top_CTRL_s_axi
 #(parameter
-    C_S_AXI_ADDR_WIDTH = 7,
+    C_S_AXI_ADDR_WIDTH = 8,
     C_S_AXI_DATA_WIDTH = 32
 )(
     input  wire                          ACLK,
@@ -35,11 +35,15 @@
     output wire [63:0]                   ifmap,
     output wire [63:0]                   weight,
     output wire [63:0]                   bias,
+    output wire [63:0]                   mult,
+    output wire [63:0]                   shift,
     output wire [63:0]                   ofmap,
     output wire [7:0]                    in_h,
     output wire [7:0]                    in_w,
     output wire [7:0]                    in_ch,
     output wire [7:0]                    out_ch,
+    output wire [1:0]                    layer_type,
+    output wire [1:0]                    stride,
     output wire [0:0]                    do_relu,
     output wire [0:0]                    do_pool,
     input  wire [95:0]                   perf,
@@ -86,88 +90,116 @@
 // 0x2c : Data signal of bias
 //        bit 31~0 - bias[63:32] (Read/Write)
 // 0x30 : reserved
-// 0x34 : Data signal of ofmap
-//        bit 31~0 - ofmap[31:0] (Read/Write)
-// 0x38 : Data signal of ofmap
-//        bit 31~0 - ofmap[63:32] (Read/Write)
+// 0x34 : Data signal of mult
+//        bit 31~0 - mult[31:0] (Read/Write)
+// 0x38 : Data signal of mult
+//        bit 31~0 - mult[63:32] (Read/Write)
 // 0x3c : reserved
-// 0x40 : Data signal of in_h
+// 0x40 : Data signal of shift
+//        bit 31~0 - shift[31:0] (Read/Write)
+// 0x44 : Data signal of shift
+//        bit 31~0 - shift[63:32] (Read/Write)
+// 0x48 : reserved
+// 0x4c : Data signal of ofmap
+//        bit 31~0 - ofmap[31:0] (Read/Write)
+// 0x50 : Data signal of ofmap
+//        bit 31~0 - ofmap[63:32] (Read/Write)
+// 0x54 : reserved
+// 0x58 : Data signal of in_h
 //        bit 7~0 - in_h[7:0] (Read/Write)
 //        others  - reserved
-// 0x44 : reserved
-// 0x48 : Data signal of in_w
+// 0x5c : reserved
+// 0x60 : Data signal of in_w
 //        bit 7~0 - in_w[7:0] (Read/Write)
 //        others  - reserved
-// 0x4c : reserved
-// 0x50 : Data signal of in_ch
+// 0x64 : reserved
+// 0x68 : Data signal of in_ch
 //        bit 7~0 - in_ch[7:0] (Read/Write)
 //        others  - reserved
-// 0x54 : reserved
-// 0x58 : Data signal of out_ch
+// 0x6c : reserved
+// 0x70 : Data signal of out_ch
 //        bit 7~0 - out_ch[7:0] (Read/Write)
 //        others  - reserved
-// 0x5c : reserved
-// 0x60 : Data signal of do_relu
+// 0x74 : reserved
+// 0x78 : Data signal of layer_type
+//        bit 1~0 - layer_type[1:0] (Read/Write)
+//        others  - reserved
+// 0x7c : reserved
+// 0x80 : Data signal of stride
+//        bit 1~0 - stride[1:0] (Read/Write)
+//        others  - reserved
+// 0x84 : reserved
+// 0x88 : Data signal of do_relu
 //        bit 0  - do_relu[0] (Read/Write)
 //        others - reserved
-// 0x64 : reserved
-// 0x68 : Data signal of do_pool
+// 0x8c : reserved
+// 0x90 : Data signal of do_pool
 //        bit 0  - do_pool[0] (Read/Write)
 //        others - reserved
-// 0x6c : reserved
-// 0x70 : Data signal of perf
+// 0x94 : reserved
+// 0x98 : Data signal of perf
 //        bit 31~0 - perf[31:0] (Read)
-// 0x74 : Data signal of perf
+// 0x9c : Data signal of perf
 //        bit 31~0 - perf[63:32] (Read)
-// 0x78 : Data signal of perf
+// 0xa0 : Data signal of perf
 //        bit 31~0 - perf[95:64] (Read)
-// 0x7c : Control signal of perf
+// 0xa4 : Control signal of perf
 //        bit 0  - perf_ap_vld (Read/COR)
 //        others - reserved
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 //------------------------Parameter----------------------
 localparam
-    ADDR_AP_CTRL        = 7'h00,
-    ADDR_GIE            = 7'h04,
-    ADDR_IER            = 7'h08,
-    ADDR_ISR            = 7'h0c,
-    ADDR_IFMAP_DATA_0   = 7'h10,
-    ADDR_IFMAP_DATA_1   = 7'h14,
-    ADDR_IFMAP_CTRL     = 7'h18,
-    ADDR_WEIGHT_DATA_0  = 7'h1c,
-    ADDR_WEIGHT_DATA_1  = 7'h20,
-    ADDR_WEIGHT_CTRL    = 7'h24,
-    ADDR_BIAS_DATA_0    = 7'h28,
-    ADDR_BIAS_DATA_1    = 7'h2c,
-    ADDR_BIAS_CTRL      = 7'h30,
-    ADDR_OFMAP_DATA_0   = 7'h34,
-    ADDR_OFMAP_DATA_1   = 7'h38,
-    ADDR_OFMAP_CTRL     = 7'h3c,
-    ADDR_IN_H_DATA_0    = 7'h40,
-    ADDR_IN_H_CTRL      = 7'h44,
-    ADDR_IN_W_DATA_0    = 7'h48,
-    ADDR_IN_W_CTRL      = 7'h4c,
-    ADDR_IN_CH_DATA_0   = 7'h50,
-    ADDR_IN_CH_CTRL     = 7'h54,
-    ADDR_OUT_CH_DATA_0  = 7'h58,
-    ADDR_OUT_CH_CTRL    = 7'h5c,
-    ADDR_DO_RELU_DATA_0 = 7'h60,
-    ADDR_DO_RELU_CTRL   = 7'h64,
-    ADDR_DO_POOL_DATA_0 = 7'h68,
-    ADDR_DO_POOL_CTRL   = 7'h6c,
-    ADDR_PERF_DATA_0    = 7'h70,
-    ADDR_PERF_DATA_1    = 7'h74,
-    ADDR_PERF_DATA_2    = 7'h78,
-    ADDR_PERF_CTRL      = 7'h7c,
-    WRIDLE              = 2'd0,
-    WRDATA              = 2'd1,
-    WRRESP              = 2'd2,
-    WRRESET             = 2'd3,
-    RDIDLE              = 2'd0,
-    RDDATA              = 2'd1,
-    RDRESET             = 2'd2,
-    ADDR_BITS                = 7;
+    ADDR_AP_CTRL           = 8'h00,
+    ADDR_GIE               = 8'h04,
+    ADDR_IER               = 8'h08,
+    ADDR_ISR               = 8'h0c,
+    ADDR_IFMAP_DATA_0      = 8'h10,
+    ADDR_IFMAP_DATA_1      = 8'h14,
+    ADDR_IFMAP_CTRL        = 8'h18,
+    ADDR_WEIGHT_DATA_0     = 8'h1c,
+    ADDR_WEIGHT_DATA_1     = 8'h20,
+    ADDR_WEIGHT_CTRL       = 8'h24,
+    ADDR_BIAS_DATA_0       = 8'h28,
+    ADDR_BIAS_DATA_1       = 8'h2c,
+    ADDR_BIAS_CTRL         = 8'h30,
+    ADDR_MULT_DATA_0       = 8'h34,
+    ADDR_MULT_DATA_1       = 8'h38,
+    ADDR_MULT_CTRL         = 8'h3c,
+    ADDR_SHIFT_DATA_0      = 8'h40,
+    ADDR_SHIFT_DATA_1      = 8'h44,
+    ADDR_SHIFT_CTRL        = 8'h48,
+    ADDR_OFMAP_DATA_0      = 8'h4c,
+    ADDR_OFMAP_DATA_1      = 8'h50,
+    ADDR_OFMAP_CTRL        = 8'h54,
+    ADDR_IN_H_DATA_0       = 8'h58,
+    ADDR_IN_H_CTRL         = 8'h5c,
+    ADDR_IN_W_DATA_0       = 8'h60,
+    ADDR_IN_W_CTRL         = 8'h64,
+    ADDR_IN_CH_DATA_0      = 8'h68,
+    ADDR_IN_CH_CTRL        = 8'h6c,
+    ADDR_OUT_CH_DATA_0     = 8'h70,
+    ADDR_OUT_CH_CTRL       = 8'h74,
+    ADDR_LAYER_TYPE_DATA_0 = 8'h78,
+    ADDR_LAYER_TYPE_CTRL   = 8'h7c,
+    ADDR_STRIDE_DATA_0     = 8'h80,
+    ADDR_STRIDE_CTRL       = 8'h84,
+    ADDR_DO_RELU_DATA_0    = 8'h88,
+    ADDR_DO_RELU_CTRL      = 8'h8c,
+    ADDR_DO_POOL_DATA_0    = 8'h90,
+    ADDR_DO_POOL_CTRL      = 8'h94,
+    ADDR_PERF_DATA_0       = 8'h98,
+    ADDR_PERF_DATA_1       = 8'h9c,
+    ADDR_PERF_DATA_2       = 8'ha0,
+    ADDR_PERF_CTRL         = 8'ha4,
+    WRIDLE                 = 2'd0,
+    WRDATA                 = 2'd1,
+    WRRESP                 = 2'd2,
+    WRRESET                = 2'd3,
+    RDIDLE                 = 2'd0,
+    RDDATA                 = 2'd1,
+    RDRESET                = 2'd2,
+    ADDR_BITS                = 8;
 
 //------------------------Local signal-------------------
     reg  [1:0]                    wstate = WRRESET;
@@ -199,11 +231,15 @@ localparam
     reg  [63:0]                   int_ifmap = 'b0;
     reg  [63:0]                   int_weight = 'b0;
     reg  [63:0]                   int_bias = 'b0;
+    reg  [63:0]                   int_mult = 'b0;
+    reg  [63:0]                   int_shift = 'b0;
     reg  [63:0]                   int_ofmap = 'b0;
     reg  [7:0]                    int_in_h = 'b0;
     reg  [7:0]                    int_in_w = 'b0;
     reg  [7:0]                    int_in_ch = 'b0;
     reg  [7:0]                    int_out_ch = 'b0;
+    reg  [1:0]                    int_layer_type = 'b0;
+    reg  [1:0]                    int_stride = 'b0;
     reg  [0:0]                    int_do_relu = 'b0;
     reg  [0:0]                    int_do_pool = 'b0;
     reg                           int_perf_ap_vld;
@@ -335,6 +371,18 @@ always @(posedge ACLK) begin
                 ADDR_BIAS_DATA_1: begin
                     rdata <= int_bias[63:32];
                 end
+                ADDR_MULT_DATA_0: begin
+                    rdata <= int_mult[31:0];
+                end
+                ADDR_MULT_DATA_1: begin
+                    rdata <= int_mult[63:32];
+                end
+                ADDR_SHIFT_DATA_0: begin
+                    rdata <= int_shift[31:0];
+                end
+                ADDR_SHIFT_DATA_1: begin
+                    rdata <= int_shift[63:32];
+                end
                 ADDR_OFMAP_DATA_0: begin
                     rdata <= int_ofmap[31:0];
                 end
@@ -352,6 +400,12 @@ always @(posedge ACLK) begin
                 end
                 ADDR_OUT_CH_DATA_0: begin
                     rdata <= int_out_ch[7:0];
+                end
+                ADDR_LAYER_TYPE_DATA_0: begin
+                    rdata <= int_layer_type[1:0];
+                end
+                ADDR_STRIDE_DATA_0: begin
+                    rdata <= int_stride[1:0];
                 end
                 ADDR_DO_RELU_DATA_0: begin
                     rdata <= int_do_relu[0:0];
@@ -386,11 +440,15 @@ assign auto_restart_done = auto_restart_status && (ap_idle && !int_ap_idle);
 assign ifmap             = int_ifmap;
 assign weight            = int_weight;
 assign bias              = int_bias;
+assign mult              = int_mult;
+assign shift             = int_shift;
 assign ofmap             = int_ofmap;
 assign in_h              = int_in_h;
 assign in_w              = int_in_w;
 assign in_ch             = int_in_ch;
 assign out_ch            = int_out_ch;
+assign layer_type        = int_layer_type;
+assign stride            = int_stride;
 assign do_relu           = int_do_relu;
 assign do_pool           = int_do_pool;
 // int_interrupt
@@ -585,6 +643,46 @@ always @(posedge ACLK) begin
     end
 end
 
+// int_mult[31:0]
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_mult[31:0] <= 0;
+    else if (ACLK_EN) begin
+        if (w_hs && waddr == ADDR_MULT_DATA_0)
+            int_mult[31:0] <= (WDATA[31:0] & wmask) | (int_mult[31:0] & ~wmask);
+    end
+end
+
+// int_mult[63:32]
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_mult[63:32] <= 0;
+    else if (ACLK_EN) begin
+        if (w_hs && waddr == ADDR_MULT_DATA_1)
+            int_mult[63:32] <= (WDATA[31:0] & wmask) | (int_mult[63:32] & ~wmask);
+    end
+end
+
+// int_shift[31:0]
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_shift[31:0] <= 0;
+    else if (ACLK_EN) begin
+        if (w_hs && waddr == ADDR_SHIFT_DATA_0)
+            int_shift[31:0] <= (WDATA[31:0] & wmask) | (int_shift[31:0] & ~wmask);
+    end
+end
+
+// int_shift[63:32]
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_shift[63:32] <= 0;
+    else if (ACLK_EN) begin
+        if (w_hs && waddr == ADDR_SHIFT_DATA_1)
+            int_shift[63:32] <= (WDATA[31:0] & wmask) | (int_shift[63:32] & ~wmask);
+    end
+end
+
 // int_ofmap[31:0]
 always @(posedge ACLK) begin
     if (ARESET)
@@ -642,6 +740,26 @@ always @(posedge ACLK) begin
     else if (ACLK_EN) begin
         if (w_hs && waddr == ADDR_OUT_CH_DATA_0)
             int_out_ch[7:0] <= (WDATA[31:0] & wmask) | (int_out_ch[7:0] & ~wmask);
+    end
+end
+
+// int_layer_type[1:0]
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_layer_type[1:0] <= 0;
+    else if (ACLK_EN) begin
+        if (w_hs && waddr == ADDR_LAYER_TYPE_DATA_0)
+            int_layer_type[1:0] <= (WDATA[31:0] & wmask) | (int_layer_type[1:0] & ~wmask);
+    end
+end
+
+// int_stride[1:0]
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_stride[1:0] <= 0;
+    else if (ACLK_EN) begin
+        if (w_hs && waddr == ADDR_STRIDE_DATA_0)
+            int_stride[1:0] <= (WDATA[31:0] & wmask) | (int_stride[1:0] & ~wmask);
     end
 end
 

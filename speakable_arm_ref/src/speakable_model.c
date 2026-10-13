@@ -119,6 +119,17 @@ static void gap(const spk_layer_t *L, const int8_t *in, int8_t *out) {
 // ----------------------------------------------------------------------
 // 전체 추론
 // ----------------------------------------------------------------------
+void spk_run_layer(int layer_idx, const int8_t *in, int8_t *out) {
+    const spk_layer_t *L = &spk_layers[layer_idx - 1];
+    switch (L->type) {
+    case SPK_CONV3X3: conv3x3(L, in, out); break;
+    case SPK_DW3X3:   dw3x3(L, in, out);   break;
+    case SPK_PW1X1:
+    case SPK_FC:      pw1x1(L, in, out);   break;
+    case SPK_GAP:     gap(L, in, out);     break;
+    }
+}
+
 void spk_cnn_run(const int8_t *input, int8_t *embedding, spk_layer_hook_t hook, void *ctx) {
     const int8_t *in = input;
     int8_t *out = buf_a;
@@ -127,13 +138,7 @@ void spk_cnn_run(const int8_t *input, int8_t *embedding, spk_layer_hook_t hook, 
         const spk_layer_t *L = &spk_layers[i];
         if (i == SPK_NUM_LAYERS - 1) out = embedding;
 
-        switch (L->type) {
-        case SPK_CONV3X3: conv3x3(L, in, out); break;
-        case SPK_DW3X3:   dw3x3(L, in, out);   break;
-        case SPK_PW1X1:
-        case SPK_FC:      pw1x1(L, in, out);   break;
-        case SPK_GAP:     gap(L, in, out);     break;
-        }
+        spk_run_layer(i + 1, in, out);
 
         if (hook) hook(i + 1, out, L->out_c * L->out_h * L->out_w, ctx);
 

@@ -37,3 +37,6 @@ Speakable_vitis/**/zynq_fsbl_bsp/include/
 Speakable_vitis/**/zynq_fsbl_bsp/lib/
 Speakable_vitis/app_component/_ide/bitstream/
 Speakable_vitis/app_component/_ide/psinit/
+
+# ---- Vivado 증분 합성 체크포인트 (자동 생성) ----
+Speakable_vivado/**/*.srcs/utils_1/

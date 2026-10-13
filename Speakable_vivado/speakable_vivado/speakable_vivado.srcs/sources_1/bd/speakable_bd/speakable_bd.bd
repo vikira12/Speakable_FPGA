@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xCC6CFA53F622E079",
+      "boundary_crc": "0xCC6CFA53B4580162",
       "device": "xc7z020clg400-1",
       "gen_directory": "../../../../speakable_vivado.gen/sources_1/bd/speakable_bd",
       "name": "speakable_bd",
@@ -1453,7 +1453,7 @@
       },
       "speakable_cnn_0": {
         "vlnv": "xilinx.com:hls:speakable_cnn_top:1.0",
-        "ip_revision": "2114816319",
+        "ip_revision": "2114818863",
         "xci_name": "speakable_bd_speakable_cnn_0_0",
         "xci_path": "ip\\speakable_bd_speakable_cnn_0_0\\speakable_bd_speakable_cnn_0_0.xci",
         "inst_hier_path": "speakable_cnn_0",
@@ -1664,9 +1664,9 @@
           "processing_system7_0/M_AXI_GP0_ACLK",
           "axi_smc/aclk",
           "rst_ps7_0_100M/slowest_sync_clk",
-          "speakable_cnn_0/ap_clk",
           "axi_smc_mem/aclk",
-          "processing_system7_0/S_AXI_HP0_ACLK"
+          "processing_system7_0/S_AXI_HP0_ACLK",
+          "speakable_cnn_0/ap_clk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -1679,8 +1679,8 @@
         "ports": [
           "rst_ps7_0_100M/peripheral_aresetn",
           "axi_smc/aresetn",
-          "speakable_cnn_0/ap_rst_n",
-          "axi_smc_mem/aresetn"
+          "axi_smc_mem/aresetn",
+          "speakable_cnn_0/ap_rst_n"
         ]
       },
       "speakable_cnn_0_interrupt": {

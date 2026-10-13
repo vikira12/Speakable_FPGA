@@ -63,6 +63,9 @@ extern const spk_layer_t spk_layers[SPK_NUM_LAYERS];
 // 정수 추론: input [1][40][64] int8 → embedding [64] int8
 void spk_cnn_run(const int8_t *input, int8_t *embedding, spk_layer_hook_t hook, void *ctx);
 
+// 레이어 하나만 실행 (layer_idx: 1 ~ SPK_NUM_LAYERS). FPGA가 L1~L9를 처리한 뒤 L10~L11을 ARM에서 돌릴 때 사용
+void spk_run_layer(int layer_idx, const int8_t *in, int8_t *out);
+
 // 재양자화 (정수 규약의 단일 구현 지점)
 int8_t spk_requant(int32_t acc, int32_t mult, int shift);
 

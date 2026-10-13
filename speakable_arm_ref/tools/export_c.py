@@ -63,7 +63,9 @@ def main(model_dir, tv_dir, out_dir, max_tv=None):
         sys.exit(f"[오류] {tv_dir}에 tv*_input.npy 가 없음")
 
     n_c = len(ks) if max_tv is None else min(int(max_tv), len(ks))
-    parts = ["#ifndef SPEAKABLE_TESTVEC_H\n#define SPEAKABLE_TESTVEC_H\n\n#include <stdint.h>\n#include \"speakable_model.h\"\n\n",
+    # speakable_model.h에 의존하지 않게 레이어 수만 정의 (HLS 테스트벤치에서도 include 가능)
+    parts = ["#ifndef SPEAKABLE_TESTVEC_H\n#define SPEAKABLE_TESTVEC_H\n\n#include <stdint.h>\n\n",
+             f"#ifndef SPK_NUM_LAYERS\n#define SPK_NUM_LAYERS {len(rm.LAYERS)}\n#endif\n",
              f"#define SPK_NUM_TV {n_c}\n\n"]
     all_ok = True
     for idx, k in enumerate(ks):

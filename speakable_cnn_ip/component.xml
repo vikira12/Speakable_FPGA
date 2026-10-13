@@ -153,7 +153,7 @@
       <spirit:parameters>
         <spirit:parameter>
           <spirit:name>ADDR_WIDTH</spirit:name>
-          <spirit:value spirit:id="BUSIFPARAM_VALUE.S_AXI_CTRL.ADDR_WIDTH">7</spirit:value>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.S_AXI_CTRL.ADDR_WIDTH">8</spirit:value>
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>DATA_WIDTH</spirit:name>
@@ -1522,10 +1522,102 @@
           </spirit:field>
         </spirit:register>
         <spirit:register>
+          <spirit:name>mult_1</spirit:name>
+          <spirit:displayName>mult_1</spirit:displayName>
+          <spirit:description>Data signal of mult</spirit:description>
+          <spirit:addressOffset>52</spirit:addressOffset>
+          <spirit:size spirit:format="long">32</spirit:size>
+          <spirit:access>write-only</spirit:access>
+          <spirit:reset>
+            <spirit:value spirit:format="long">0</spirit:value>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>mult</spirit:name>
+            <spirit:description>Bit 31 to 0 of mult</spirit:description>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth spirit:format="long">32</spirit:bitWidth>
+            <spirit:access>write-only</spirit:access>
+            <spirit:writeValueConstraint>
+              <spirit:minimum>0</spirit:minimum>
+              <spirit:maximum>0</spirit:maximum>
+            </spirit:writeValueConstraint>
+            <spirit:testable spirit:testConstraint="unconstrained">false</spirit:testable>
+          </spirit:field>
+        </spirit:register>
+        <spirit:register>
+          <spirit:name>mult_2</spirit:name>
+          <spirit:displayName>mult_2</spirit:displayName>
+          <spirit:description>Data signal of mult</spirit:description>
+          <spirit:addressOffset>56</spirit:addressOffset>
+          <spirit:size spirit:format="long">32</spirit:size>
+          <spirit:access>write-only</spirit:access>
+          <spirit:reset>
+            <spirit:value spirit:format="long">0</spirit:value>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>mult</spirit:name>
+            <spirit:description>Bit 63 to 32 of mult</spirit:description>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth spirit:format="long">32</spirit:bitWidth>
+            <spirit:access>write-only</spirit:access>
+            <spirit:writeValueConstraint>
+              <spirit:minimum>0</spirit:minimum>
+              <spirit:maximum>0</spirit:maximum>
+            </spirit:writeValueConstraint>
+            <spirit:testable spirit:testConstraint="unconstrained">false</spirit:testable>
+          </spirit:field>
+        </spirit:register>
+        <spirit:register>
+          <spirit:name>shift_1</spirit:name>
+          <spirit:displayName>shift_1</spirit:displayName>
+          <spirit:description>Data signal of shift</spirit:description>
+          <spirit:addressOffset>64</spirit:addressOffset>
+          <spirit:size spirit:format="long">32</spirit:size>
+          <spirit:access>write-only</spirit:access>
+          <spirit:reset>
+            <spirit:value spirit:format="long">0</spirit:value>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>shift</spirit:name>
+            <spirit:description>Bit 31 to 0 of shift</spirit:description>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth spirit:format="long">32</spirit:bitWidth>
+            <spirit:access>write-only</spirit:access>
+            <spirit:writeValueConstraint>
+              <spirit:minimum>0</spirit:minimum>
+              <spirit:maximum>0</spirit:maximum>
+            </spirit:writeValueConstraint>
+            <spirit:testable spirit:testConstraint="unconstrained">false</spirit:testable>
+          </spirit:field>
+        </spirit:register>
+        <spirit:register>
+          <spirit:name>shift_2</spirit:name>
+          <spirit:displayName>shift_2</spirit:displayName>
+          <spirit:description>Data signal of shift</spirit:description>
+          <spirit:addressOffset>68</spirit:addressOffset>
+          <spirit:size spirit:format="long">32</spirit:size>
+          <spirit:access>write-only</spirit:access>
+          <spirit:reset>
+            <spirit:value spirit:format="long">0</spirit:value>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>shift</spirit:name>
+            <spirit:description>Bit 63 to 32 of shift</spirit:description>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth spirit:format="long">32</spirit:bitWidth>
+            <spirit:access>write-only</spirit:access>
+            <spirit:writeValueConstraint>
+              <spirit:minimum>0</spirit:minimum>
+              <spirit:maximum>0</spirit:maximum>
+            </spirit:writeValueConstraint>
+            <spirit:testable spirit:testConstraint="unconstrained">false</spirit:testable>
+          </spirit:field>
+        </spirit:register>
+        <spirit:register>
           <spirit:name>ofmap_1</spirit:name>
           <spirit:displayName>ofmap_1</spirit:displayName>
           <spirit:description>Data signal of ofmap</spirit:description>
-          <spirit:addressOffset>52</spirit:addressOffset>
+          <spirit:addressOffset>76</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>write-only</spirit:access>
           <spirit:reset>
@@ -1548,7 +1640,7 @@
           <spirit:name>ofmap_2</spirit:name>
           <spirit:displayName>ofmap_2</spirit:displayName>
           <spirit:description>Data signal of ofmap</spirit:description>
-          <spirit:addressOffset>56</spirit:addressOffset>
+          <spirit:addressOffset>80</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>write-only</spirit:access>
           <spirit:reset>
@@ -1571,7 +1663,7 @@
           <spirit:name>in_h</spirit:name>
           <spirit:displayName>in_h</spirit:displayName>
           <spirit:description>Data signal of in_h</spirit:description>
-          <spirit:addressOffset>64</spirit:addressOffset>
+          <spirit:addressOffset>88</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>write-only</spirit:access>
           <spirit:reset>
@@ -1607,7 +1699,7 @@
           <spirit:name>in_w</spirit:name>
           <spirit:displayName>in_w</spirit:displayName>
           <spirit:description>Data signal of in_w</spirit:description>
-          <spirit:addressOffset>72</spirit:addressOffset>
+          <spirit:addressOffset>96</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>write-only</spirit:access>
           <spirit:reset>
@@ -1643,7 +1735,7 @@
           <spirit:name>in_ch</spirit:name>
           <spirit:displayName>in_ch</spirit:displayName>
           <spirit:description>Data signal of in_ch</spirit:description>
-          <spirit:addressOffset>80</spirit:addressOffset>
+          <spirit:addressOffset>104</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>write-only</spirit:access>
           <spirit:reset>
@@ -1679,7 +1771,7 @@
           <spirit:name>out_ch</spirit:name>
           <spirit:displayName>out_ch</spirit:displayName>
           <spirit:description>Data signal of out_ch</spirit:description>
-          <spirit:addressOffset>88</spirit:addressOffset>
+          <spirit:addressOffset>112</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>write-only</spirit:access>
           <spirit:reset>
@@ -1712,10 +1804,82 @@
           </spirit:field>
         </spirit:register>
         <spirit:register>
+          <spirit:name>layer_type</spirit:name>
+          <spirit:displayName>layer_type</spirit:displayName>
+          <spirit:description>Data signal of layer_type</spirit:description>
+          <spirit:addressOffset>120</spirit:addressOffset>
+          <spirit:size spirit:format="long">32</spirit:size>
+          <spirit:access>write-only</spirit:access>
+          <spirit:reset>
+            <spirit:value spirit:format="long">0</spirit:value>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>layer_type</spirit:name>
+            <spirit:description>Bit 1 to 0 of layer_type</spirit:description>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth spirit:format="long">2</spirit:bitWidth>
+            <spirit:access>write-only</spirit:access>
+            <spirit:writeValueConstraint>
+              <spirit:minimum>0</spirit:minimum>
+              <spirit:maximum>0</spirit:maximum>
+            </spirit:writeValueConstraint>
+            <spirit:testable spirit:testConstraint="unconstrained">false</spirit:testable>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>RESERVED</spirit:name>
+            <spirit:description>Reserved.  0s on read.</spirit:description>
+            <spirit:bitOffset>2</spirit:bitOffset>
+            <spirit:bitWidth spirit:format="long">30</spirit:bitWidth>
+            <spirit:access>read-only</spirit:access>
+            <spirit:writeValueConstraint>
+              <spirit:minimum>0</spirit:minimum>
+              <spirit:maximum>0</spirit:maximum>
+            </spirit:writeValueConstraint>
+            <spirit:readAction>modify</spirit:readAction>
+            <spirit:testable spirit:testConstraint="unconstrained">false</spirit:testable>
+          </spirit:field>
+        </spirit:register>
+        <spirit:register>
+          <spirit:name>stride</spirit:name>
+          <spirit:displayName>stride</spirit:displayName>
+          <spirit:description>Data signal of stride</spirit:description>
+          <spirit:addressOffset>128</spirit:addressOffset>
+          <spirit:size spirit:format="long">32</spirit:size>
+          <spirit:access>write-only</spirit:access>
+          <spirit:reset>
+            <spirit:value spirit:format="long">0</spirit:value>
+          </spirit:reset>
+          <spirit:field>
+            <spirit:name>stride</spirit:name>
+            <spirit:description>Bit 1 to 0 of stride</spirit:description>
+            <spirit:bitOffset>0</spirit:bitOffset>
+            <spirit:bitWidth spirit:format="long">2</spirit:bitWidth>
+            <spirit:access>write-only</spirit:access>
+            <spirit:writeValueConstraint>
+              <spirit:minimum>0</spirit:minimum>
+              <spirit:maximum>0</spirit:maximum>
+            </spirit:writeValueConstraint>
+            <spirit:testable spirit:testConstraint="unconstrained">false</spirit:testable>
+          </spirit:field>
+          <spirit:field>
+            <spirit:name>RESERVED</spirit:name>
+            <spirit:description>Reserved.  0s on read.</spirit:description>
+            <spirit:bitOffset>2</spirit:bitOffset>
+            <spirit:bitWidth spirit:format="long">30</spirit:bitWidth>
+            <spirit:access>read-only</spirit:access>
+            <spirit:writeValueConstraint>
+              <spirit:minimum>0</spirit:minimum>
+              <spirit:maximum>0</spirit:maximum>
+            </spirit:writeValueConstraint>
+            <spirit:readAction>modify</spirit:readAction>
+            <spirit:testable spirit:testConstraint="unconstrained">false</spirit:testable>
+          </spirit:field>
+        </spirit:register>
+        <spirit:register>
           <spirit:name>do_relu</spirit:name>
           <spirit:displayName>do_relu</spirit:displayName>
           <spirit:description>Data signal of do_relu</spirit:description>
-          <spirit:addressOffset>96</spirit:addressOffset>
+          <spirit:addressOffset>136</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>write-only</spirit:access>
           <spirit:reset>
@@ -1751,7 +1915,7 @@
           <spirit:name>do_pool</spirit:name>
           <spirit:displayName>do_pool</spirit:displayName>
           <spirit:description>Data signal of do_pool</spirit:description>
-          <spirit:addressOffset>104</spirit:addressOffset>
+          <spirit:addressOffset>144</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>write-only</spirit:access>
           <spirit:reset>
@@ -1787,7 +1951,7 @@
           <spirit:name>perf_1</spirit:name>
           <spirit:displayName>perf_1</spirit:displayName>
           <spirit:description>Data signal of perf</spirit:description>
-          <spirit:addressOffset>112</spirit:addressOffset>
+          <spirit:addressOffset>152</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>read-only</spirit:access>
           <spirit:reset>
@@ -1811,7 +1975,7 @@
           <spirit:name>perf_2</spirit:name>
           <spirit:displayName>perf_2</spirit:displayName>
           <spirit:description>Data signal of perf</spirit:description>
-          <spirit:addressOffset>116</spirit:addressOffset>
+          <spirit:addressOffset>156</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>read-only</spirit:access>
           <spirit:reset>
@@ -1835,7 +1999,7 @@
           <spirit:name>perf_3</spirit:name>
           <spirit:displayName>perf_3</spirit:displayName>
           <spirit:description>Data signal of perf</spirit:description>
-          <spirit:addressOffset>120</spirit:addressOffset>
+          <spirit:addressOffset>160</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>read-only</spirit:access>
           <spirit:reset>
@@ -1859,7 +2023,7 @@
           <spirit:name>perf_ctrl</spirit:name>
           <spirit:displayName>perf_ctrl</spirit:displayName>
           <spirit:description>Control signal of perf</spirit:description>
-          <spirit:addressOffset>124</spirit:addressOffset>
+          <spirit:addressOffset>164</spirit:addressOffset>
           <spirit:size spirit:format="long">32</spirit:size>
           <spirit:access>read-only</spirit:access>
           <spirit:reset>
@@ -1909,7 +2073,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>c0c24680</spirit:value>
+            <spirit:value>36361b94</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1925,7 +2089,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>f4fae144</spirit:value>
+            <spirit:value>dd957dcb</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1941,7 +2105,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>5d91df5b</spirit:value>
+            <spirit:value>61119258</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1957,7 +2121,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>2f8bc016</spirit:value>
+            <spirit:value>1247ff5b</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1971,7 +2135,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>f3258f90</spirit:value>
+            <spirit:value>6298e23a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2007,7 +2171,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>b449a6c2</spirit:value>
+            <spirit:value>0bb59a30</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2032,7 +2196,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_CTRL_ADDR_WIDTH&apos;)) - 1)">6</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_CTRL_ADDR_WIDTH&apos;)) - 1)">7</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -2075,7 +2239,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_CTRL_ADDR_WIDTH&apos;)) - 1)">6</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_CTRL_ADDR_WIDTH&apos;)) - 1)">7</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -3905,7 +4069,7 @@
     <spirit:modelParameters>
       <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
         <spirit:name>C_S_AXI_CTRL_ADDR_WIDTH</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXI_CTRL_ADDR_WIDTH">7</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXI_CTRL_ADDR_WIDTH">8</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_S_AXI_CTRL_DATA_WIDTH</spirit:name>
@@ -4119,10 +4283,6 @@
         <spirit:userFileType>USED_IN_out_of_context</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_am_addmul_12s_9s_8ns_21_4_1.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
         <spirit:name>hdl/verilog/speakable_cnn_top_compute_tile.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
@@ -4159,6 +4319,22 @@
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_load_weights.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_load_weights_oc_words_RAM_AUTO_1R1W.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_load_weights_Pipeline_LOAD_W_BYTE.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_load_weights_Pipeline_LOAD_W_WORD.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>hdl/verilog/speakable_cnn_top_mac_muladd_8s_8s_16s_17_4_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
@@ -4179,7 +4355,7 @@
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_8ns_6ns_14_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_4ns_32ns_36_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4187,7 +4363,7 @@
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_8ns_14ns_21_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_8ns_36ns_43_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4195,51 +4371,55 @@
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_9s_8s_17_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_9s_9s_18_1_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_11s_11s_22_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_9s_32s_32_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_16ns_22s_32_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_18s_20ns_32_1_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_17s_8ns_23_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_29s_7s_29_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_21s_6ns_27_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_29s_9s_29_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_oc_words_RAM_AUTO_1R1W.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_32s_7s_32_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_bll.dat</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_32s_32s_64_2_1.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEbBo.dat</spirit:name>
         <spirit:userFileType>mif</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_bll.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEbBo.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_cnw.dat</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEcDy.dat</spirit:name>
         <spirit:userFileType>mif</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_cnw.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEcDy.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_jbC.dat</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEzec.dat</spirit:name>
         <spirit:userFileType>mif</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_jbC.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEzec.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4248,6 +4428,10 @@
       </spirit:file>
       <spirit:file>
         <spirit:name>hdl/verilog/speakable_cnn_top_sparsemux_7_2_32_1_1.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_sparsemux_7_2_64_1_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4263,23 +4447,23 @@
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_uint_ap_uint_a_bkb.dat</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_bkb.dat</spirit:name>
         <spirit:userFileType>mif</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_uint_ap_uint_a_bkb.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_bkb.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_BIAS.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_dEe.dat</spirit:name>
+        <spirit:userFileType>mif</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_dEe.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_W_BYTE.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_W_WORD.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_OC_PARAMS.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4302,11 +4486,6 @@
     <spirit:fileSet>
       <spirit:name>xilinx_verilogbehavioralsimulation_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_am_addmul_12s_9s_8ns_21_4_1.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
-      </spirit:file>
-      <spirit:file>
         <spirit:name>hdl/verilog/speakable_cnn_top_compute_tile.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
@@ -4352,6 +4531,26 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_load_weights.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_load_weights_oc_words_RAM_AUTO_1R1W.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_load_weights_Pipeline_LOAD_W_BYTE.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_load_weights_Pipeline_LOAD_W_WORD.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>hdl/verilog/speakable_cnn_top_mac_muladd_8s_8s_16s_17_4_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
@@ -4377,7 +4576,7 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_8ns_6ns_14_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_4ns_32ns_36_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4387,7 +4586,7 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_8ns_14ns_21_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_8ns_36ns_43_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4397,59 +4596,64 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_9s_8s_17_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_9s_9s_18_1_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_11s_11s_22_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_9s_32s_32_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_16ns_22s_32_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_18s_20ns_32_1_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_17s_8ns_23_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_29s_7s_29_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_mul_21s_6ns_27_1_1.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_29s_9s_29_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_oc_words_RAM_AUTO_1R1W.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_32s_7s_32_2_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_bll.dat</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_mul_32s_32s_64_2_1.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEbBo.dat</spirit:name>
         <spirit:userFileType>mif</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_bll.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEbBo.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_cnw.dat</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEcDy.dat</spirit:name>
         <spirit:userFileType>mif</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_cnw.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEcDy.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_jbC.dat</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEzec.dat</spirit:name>
         <spirit:userFileType>mif</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_jbC.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEzec.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4460,6 +4664,11 @@
       </spirit:file>
       <spirit:file>
         <spirit:name>hdl/verilog/speakable_cnn_top_sparsemux_7_2_32_1_1.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_sparsemux_7_2_64_1_1.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4479,26 +4688,25 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_uint_ap_uint_a_bkb.dat</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_bkb.dat</spirit:name>
         <spirit:userFileType>mif</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_uint_ap_uint_a_bkb.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_bkb.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_BIAS.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_dEe.dat</spirit:name>
+        <spirit:userFileType>mif</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_dEe.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_W_BYTE.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_W_WORD.v</spirit:name>
+        <spirit:name>hdl/verilog/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_OC_PARAMS.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4531,10 +4739,6 @@
         <spirit:userFileType>USED_IN_out_of_context</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_am_addmul_12s_9s_8ns_21_4_1.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
         <spirit:name>hdl/vhdl/speakable_cnn_top_compute_tile.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
@@ -4571,6 +4775,22 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_load_weights.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_load_weights_oc_words_RAM_AUTO_1R1W.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_load_weights_Pipeline_LOAD_W_BYTE.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_load_weights_Pipeline_LOAD_W_WORD.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>hdl/vhdl/speakable_cnn_top_mac_muladd_8s_8s_16s_17_4_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
@@ -4591,7 +4811,7 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_8ns_6ns_14_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_4ns_32ns_36_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4599,7 +4819,7 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_8ns_14ns_21_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_8ns_36ns_43_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4607,39 +4827,43 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_9s_8s_17_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_9s_9s_18_1_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_11s_11s_22_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_9s_32s_32_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_16ns_22s_32_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_18s_20ns_32_1_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_17s_8ns_23_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_29s_7s_29_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_21s_6ns_27_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_29s_9s_29_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_oc_words_RAM_AUTO_1R1W.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_32s_7s_32_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_bll.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_32s_32s_64_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_cnw.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEbBo.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_jbC.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEcDy.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEzec.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4648,6 +4872,10 @@
       </spirit:file>
       <spirit:file>
         <spirit:name>hdl/vhdl/speakable_cnn_top_sparsemux_7_2_32_1_1.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_sparsemux_7_2_64_1_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4663,19 +4891,15 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_uint_ap_uint_a_bkb.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_bkb.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_BIAS.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_dEe.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_W_BYTE.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_W_WORD.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_OC_PARAMS.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -4693,16 +4917,11 @@
       <spirit:file>
         <spirit:name>hdl/vhdl/speakable_cnn_top.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_a6262f89</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_a02cb895</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
       <spirit:name>xilinx_vhdlbehavioralsimulation_view_fileset</spirit:name>
-      <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_am_addmul_12s_9s_8ns_21_4_1.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
-      </spirit:file>
       <spirit:file>
         <spirit:name>hdl/vhdl/speakable_cnn_top_compute_tile.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
@@ -4749,6 +4968,26 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_load_weights.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_load_weights_oc_words_RAM_AUTO_1R1W.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_load_weights_Pipeline_LOAD_W_BYTE.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_load_weights_Pipeline_LOAD_W_WORD.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>hdl/vhdl/speakable_cnn_top_mac_muladd_8s_8s_16s_17_4_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
@@ -4774,7 +5013,7 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_8ns_6ns_14_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_4ns_32ns_36_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4784,7 +5023,7 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_8ns_14ns_21_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_8ns_36ns_43_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4794,47 +5033,52 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_9s_8s_17_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_9s_9s_18_1_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_11s_11s_22_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_9s_32s_32_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_16ns_22s_32_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_18s_20ns_32_1_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_17s_8ns_23_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_29s_7s_29_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_21s_6ns_27_1_1.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_29s_9s_29_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_oc_words_RAM_AUTO_1R1W.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_32s_7s_32_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_bll.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_mul_32s_32s_64_2_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_cnw.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEbBo.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EEPS0_S_ILi8EES8_S8_jbC.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEcDy.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_p_ZZ17speakable_cnn_topPK7ap_uintILi64EES2_PK6ap_intILi32EES6_S6_PS0_S_ILi8EEzec.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4845,6 +5089,11 @@
       </spirit:file>
       <spirit:file>
         <spirit:name>hdl/vhdl/speakable_cnn_top_sparsemux_7_2_32_1_1.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_sparsemux_7_2_64_1_1.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4864,22 +5113,17 @@
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_uint_ap_uint_a_bkb.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_bkb.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_BIAS.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_ap_uint_const_ap_uint_const_ap_int_const_ap_int_const_ap_i_dEe.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_W_BYTE.vhd</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_W_WORD.vhd</spirit:name>
+        <spirit:name>hdl/vhdl/speakable_cnn_top_speakable_cnn_top_Pipeline_LOAD_OC_PARAMS.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_ipstatic</spirit:userFileType>
       </spirit:file>
@@ -4966,7 +5210,7 @@
       <spirit:file>
         <spirit:name>xgui/speakable_cnn_top_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_b449a6c2</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_0bb59a30</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -5217,11 +5461,11 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>latency</spirit:name>
-      <spirit:value spirit:id="PARAM_VALUE.latency" spirit:order="28">167</spirit:value>
+      <spirit:value spirit:id="PARAM_VALUE.latency" spirit:order="28">178</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>II</spirit:name>
-      <spirit:value spirit:id="PARAM_VALUE.II" spirit:order="29">168 ~ 2589042</spirit:value>
+      <spirit:value spirit:id="PARAM_VALUE.II" spirit:order="29">179 ~ 2589747</spirit:value>
     </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
@@ -5234,8 +5478,8 @@
       </xilinx:taxonomies>
       <xilinx:displayName>Speakable_cnn_top</xilinx:displayName>
       <xilinx:definitionSource>HLS</xilinx:definitionSource>
-      <xilinx:coreRevision>2114816319</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2026-10-05T11:41:19Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>2114818863</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2026-10-07T06:06:01Z</xilinx:coreCreationDateTime>
       <xilinx:sdxKernelAttributes>
         <xilinx:sdx_kernel>true</xilinx:sdx_kernel>
         <xilinx:sdx_kernel_type>hls</xilinx:sdx_kernel_type>
@@ -5243,13 +5487,13 @@
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2025.2</xilinx:xilinxVersion>
-      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="c135c251"/>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="9ca6750b"/>
       <xilinx:checksum xilinx:scope="addressSpaces" xilinx:value="18fdbba5"/>
-      <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="50cc8671"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="0c50fc25"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="acdf1dd4"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="f0d3de48"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="5600975b"/>
+      <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="d8443f07"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="56a122c7"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="f0cc8cb9"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="177addce"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="0acc69b5"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>
