@@ -20,6 +20,7 @@ wav(PCM16 16kHz) → [ARM] 전처리 → 입력 INT8 1×40×64 → [FPGA] CNN L1
 | `Speakable_vitis/speakable_platform/`, `app_component/` | Vitis 플랫폼, 보드 앱 (app_component의 main.c는 **구 IP용 Conv 테스트라 현재 IP와 맞지 않음**) |
 | `Speakable_vivado/speakable_vivado/` | Vivado 프로젝트, BD `speakable_bd`, 셀 `speakable_cnn_0`, `speakable_bd_wrapper.xsa` |
 | `speakable_arm_ref/` | ARM C 구현(전처리·CNN·매칭·FPGA 런타임), Python 참조 구현, 헤더 생성 도구. 상세는 그 안의 README |
+| `speakable_train/` | 임베딩 CNN 학습 (Colab 노트북 + `spk_train` 패키지). 산출물은 model_pilot_v01 형식. 상세는 그 안의 README |
 | `_backup_v1/` | 재설계 전 원본 (이름에 dpu가 남아 있는 것은 여기만) |
 
 AI 팀 산출물: `D:/Speakable_artifacts/model_pilot_v01` (파일럿, 약한 라벨 20개, **정확도 미검증**), `inference_smoke_v01`.
@@ -43,6 +44,10 @@ AI 팀 산출물: `D:/Speakable_artifacts/model_pilot_v01` (파일럿, 약한 �
 - **전처리는 기기(ARM)에서만 한다.** 서버는 웹이 품질 검사한 원본 WAV(RIFF, PCM16 LE, mono, 16kHz, 8,000~48,000 샘플, 가공 없음)를 그대로 저장·전달한다. 서버가 소리를 일부만 가공(정규화·필터·무음 제거)하는 것은 금지.
 - 기기는 등록 WAV(표현당 최대 5개)로 직접 임베딩을 계산한다. 매칭이 샘플별 max cos를 쓰므로 평균 벡터 하나로는 안 된다.
 - 동기화는 JSON 매니페스트(모델 버전, 매칭 파라미터, 표현별 녹음·TTS URL과 sha256). 기기 → 서버는 인식 로그만(원본 음성·갱신 임베딩 제외).
+- **기기 OS는 PetaLinux(Linux)로 전환한다 (2026-10-13 결정).** 서버 동기화·Wi-Fi·HTTPS·오디오·SD 부팅을 표준 방식으로 처리하기 위함. 검증된 베어메탈 빌드는 시연 예비책으로 유지한다.
+- **서버 연결은 유선 이더넷 (2026-10-13 결정).** Wi-Fi 동글 없음. PS ENET0(MIO 16~27, MDIO 52~53, 1Gbps)은 현재 xsa에 이미 켜져 있어 하드웨어 변경 불필요. USB0·SD0·UART1도 켜져 있음. 시연 예비책은 SD 카드 오프라인 동기화
+- **Linux 개발 환경은 WSL2 (Ubuntu).** PetaLinux 작업은 WSL 내부 Linux 파일시스템(~/)에서 한다(/mnt/d는 대소문자·권한 문제). 초기에는 INITRAMFS로 rootfs를 image.ub에 넣어 Windows에서 SD FAT 파티션 복사만으로 부팅
+- **오디오: 마이크는 INMP441 (I2S MEMS, 24비트), 스피커는 USB 오디오 장치.** INMP441은 PL에 I2S 수신 회로가 필요(Pmod 핀, XDC, 블록 디자인 변경 → Vivado 재빌드). 16kHz면 SCK = 64 × fs = 1.024MHz, L/R 핀 GND = 왼쪽 채널. 24비트 → 16비트 변환 후 전처리. USB 스피커는 커널 snd-usb-audio + ALSA
 - 이름에 "DPU"를 쓰지 않는다(Xilinx DPU와 혼동). 명칭은 speakable_*.
 - 모델은 고치지 않고 파이프라인을 먼저 완성한 뒤, 재학습 가중치를 교체한다(`tools/import_ai_artifacts.py` → `tools/export_c.py`).
 
