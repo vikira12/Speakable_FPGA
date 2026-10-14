@@ -40,71 +40,97 @@
 // 0x2c : Data signal of bias
 //        bit 31~0 - bias[63:32] (Read/Write)
 // 0x30 : reserved
-// 0x34 : Data signal of ofmap
-//        bit 31~0 - ofmap[31:0] (Read/Write)
-// 0x38 : Data signal of ofmap
-//        bit 31~0 - ofmap[63:32] (Read/Write)
+// 0x34 : Data signal of mult
+//        bit 31~0 - mult[31:0] (Read/Write)
+// 0x38 : Data signal of mult
+//        bit 31~0 - mult[63:32] (Read/Write)
 // 0x3c : reserved
-// 0x40 : Data signal of in_h
+// 0x40 : Data signal of shift
+//        bit 31~0 - shift[31:0] (Read/Write)
+// 0x44 : Data signal of shift
+//        bit 31~0 - shift[63:32] (Read/Write)
+// 0x48 : reserved
+// 0x4c : Data signal of ofmap
+//        bit 31~0 - ofmap[31:0] (Read/Write)
+// 0x50 : Data signal of ofmap
+//        bit 31~0 - ofmap[63:32] (Read/Write)
+// 0x54 : reserved
+// 0x58 : Data signal of in_h
 //        bit 7~0 - in_h[7:0] (Read/Write)
 //        others  - reserved
-// 0x44 : reserved
-// 0x48 : Data signal of in_w
+// 0x5c : reserved
+// 0x60 : Data signal of in_w
 //        bit 7~0 - in_w[7:0] (Read/Write)
 //        others  - reserved
-// 0x4c : reserved
-// 0x50 : Data signal of in_ch
+// 0x64 : reserved
+// 0x68 : Data signal of in_ch
 //        bit 7~0 - in_ch[7:0] (Read/Write)
 //        others  - reserved
-// 0x54 : reserved
-// 0x58 : Data signal of out_ch
+// 0x6c : reserved
+// 0x70 : Data signal of out_ch
 //        bit 7~0 - out_ch[7:0] (Read/Write)
 //        others  - reserved
-// 0x5c : reserved
-// 0x60 : Data signal of do_relu
+// 0x74 : reserved
+// 0x78 : Data signal of layer_type
+//        bit 1~0 - layer_type[1:0] (Read/Write)
+//        others  - reserved
+// 0x7c : reserved
+// 0x80 : Data signal of stride
+//        bit 1~0 - stride[1:0] (Read/Write)
+//        others  - reserved
+// 0x84 : reserved
+// 0x88 : Data signal of do_relu
 //        bit 0  - do_relu[0] (Read/Write)
 //        others - reserved
-// 0x64 : reserved
-// 0x68 : Data signal of do_pool
+// 0x8c : reserved
+// 0x90 : Data signal of do_pool
 //        bit 0  - do_pool[0] (Read/Write)
 //        others - reserved
-// 0x6c : reserved
-// 0x70 : Data signal of perf
+// 0x94 : reserved
+// 0x98 : Data signal of perf
 //        bit 31~0 - perf[31:0] (Read)
-// 0x74 : Data signal of perf
+// 0x9c : Data signal of perf
 //        bit 31~0 - perf[63:32] (Read)
-// 0x78 : Data signal of perf
+// 0xa0 : Data signal of perf
 //        bit 31~0 - perf[95:64] (Read)
-// 0x7c : Control signal of perf
+// 0xa4 : Control signal of perf
 //        bit 0  - perf_ap_vld (Read/COR)
 //        others - reserved
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_AP_CTRL      0x00
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_GIE          0x04
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IER          0x08
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_ISR          0x0c
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IFMAP_DATA   0x10
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_IFMAP_DATA   64
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_WEIGHT_DATA  0x1c
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_WEIGHT_DATA  64
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_BIAS_DATA    0x28
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_BIAS_DATA    64
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_OFMAP_DATA   0x34
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_OFMAP_DATA   64
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IN_H_DATA    0x40
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_IN_H_DATA    8
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IN_W_DATA    0x48
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_IN_W_DATA    8
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IN_CH_DATA   0x50
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_IN_CH_DATA   8
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_OUT_CH_DATA  0x58
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_OUT_CH_DATA  8
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_DO_RELU_DATA 0x60
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_DO_RELU_DATA 1
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_DO_POOL_DATA 0x68
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_DO_POOL_DATA 1
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_PERF_DATA    0x70
-#define XSPEAKABLE_CNN_TOP_CTRL_BITS_PERF_DATA    96
-#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_PERF_CTRL    0x7c
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_AP_CTRL         0x00
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_GIE             0x04
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IER             0x08
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_ISR             0x0c
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IFMAP_DATA      0x10
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_IFMAP_DATA      64
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_WEIGHT_DATA     0x1c
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_WEIGHT_DATA     64
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_BIAS_DATA       0x28
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_BIAS_DATA       64
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_MULT_DATA       0x34
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_MULT_DATA       64
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_SHIFT_DATA      0x40
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_SHIFT_DATA      64
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_OFMAP_DATA      0x4c
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_OFMAP_DATA      64
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IN_H_DATA       0x58
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_IN_H_DATA       8
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IN_W_DATA       0x60
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_IN_W_DATA       8
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_IN_CH_DATA      0x68
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_IN_CH_DATA      8
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_OUT_CH_DATA     0x70
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_OUT_CH_DATA     8
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_LAYER_TYPE_DATA 0x78
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_LAYER_TYPE_DATA 2
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_STRIDE_DATA     0x80
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_STRIDE_DATA     2
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_DO_RELU_DATA    0x88
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_DO_RELU_DATA    1
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_DO_POOL_DATA    0x90
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_DO_POOL_DATA    1
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_PERF_DATA       0x98
+#define XSPEAKABLE_CNN_TOP_CTRL_BITS_PERF_DATA       96
+#define XSPEAKABLE_CNN_TOP_CTRL_ADDR_PERF_CTRL       0xa4
 

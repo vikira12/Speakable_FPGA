@@ -133,6 +133,44 @@ u64 XSpeakable_cnn_top_Get_bias(XSpeakable_cnn_top *InstancePtr) {
     return Data;
 }
 
+void XSpeakable_cnn_top_Set_mult(XSpeakable_cnn_top *InstancePtr, u64 Data) {
+    Xil_AssertVoid(InstancePtr != NULL);
+    Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    XSpeakable_cnn_top_WriteReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_MULT_DATA, (u32)(Data));
+    XSpeakable_cnn_top_WriteReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_MULT_DATA + 4, (u32)(Data >> 32));
+}
+
+u64 XSpeakable_cnn_top_Get_mult(XSpeakable_cnn_top *InstancePtr) {
+    u64 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XSpeakable_cnn_top_ReadReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_MULT_DATA);
+    Data += (u64)XSpeakable_cnn_top_ReadReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_MULT_DATA + 4) << 32;
+    return Data;
+}
+
+void XSpeakable_cnn_top_Set_shift(XSpeakable_cnn_top *InstancePtr, u64 Data) {
+    Xil_AssertVoid(InstancePtr != NULL);
+    Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    XSpeakable_cnn_top_WriteReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_SHIFT_DATA, (u32)(Data));
+    XSpeakable_cnn_top_WriteReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_SHIFT_DATA + 4, (u32)(Data >> 32));
+}
+
+u64 XSpeakable_cnn_top_Get_shift(XSpeakable_cnn_top *InstancePtr) {
+    u64 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XSpeakable_cnn_top_ReadReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_SHIFT_DATA);
+    Data += (u64)XSpeakable_cnn_top_ReadReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_SHIFT_DATA + 4) << 32;
+    return Data;
+}
+
 void XSpeakable_cnn_top_Set_ofmap(XSpeakable_cnn_top *InstancePtr, u64 Data) {
     Xil_AssertVoid(InstancePtr != NULL);
     Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
@@ -217,6 +255,40 @@ u32 XSpeakable_cnn_top_Get_out_ch(XSpeakable_cnn_top *InstancePtr) {
     Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 
     Data = XSpeakable_cnn_top_ReadReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_OUT_CH_DATA);
+    return Data;
+}
+
+void XSpeakable_cnn_top_Set_layer_type(XSpeakable_cnn_top *InstancePtr, u32 Data) {
+    Xil_AssertVoid(InstancePtr != NULL);
+    Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    XSpeakable_cnn_top_WriteReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_LAYER_TYPE_DATA, Data);
+}
+
+u32 XSpeakable_cnn_top_Get_layer_type(XSpeakable_cnn_top *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XSpeakable_cnn_top_ReadReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_LAYER_TYPE_DATA);
+    return Data;
+}
+
+void XSpeakable_cnn_top_Set_stride(XSpeakable_cnn_top *InstancePtr, u32 Data) {
+    Xil_AssertVoid(InstancePtr != NULL);
+    Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    XSpeakable_cnn_top_WriteReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_STRIDE_DATA, Data);
+}
+
+u32 XSpeakable_cnn_top_Get_stride(XSpeakable_cnn_top *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XSpeakable_cnn_top_ReadReg(InstancePtr->Ctrl_BaseAddress, XSPEAKABLE_CNN_TOP_CTRL_ADDR_STRIDE_DATA);
     return Data;
 }
 

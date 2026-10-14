@@ -19,3 +19,6 @@
 
 _ide/logs
 _ide/.wsdata
+# Vitis 스크립트 실행 부산물
+.rigel_lopper/
+dfx_runtime.txt

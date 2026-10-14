@@ -24,13 +24,13 @@
 		speakable_cnn_0: speakable_cnn_top@40000000 {
 			interrupts = < 0 29 4 >;
 			compatible = "xlnx,speakable-cnn-top-1.0";
-			xlnx,ii = "168 , ~ , 2589042";
+			xlnx,ii = "179 , ~ , 2589747";
 			xlnx,machine = <64>;
 			interrupt-parent = <&intc>;
 			xlnx,ip-name = "speakable_cnn_top";
 			reg = <0x40000000 0x10000>;
 			clocks = <&clkc 15>;
-			xlnx,s-axi-ctrl-addr-width = <7>;
+			xlnx,s-axi-ctrl-addr-width = <8>;
 			xlnx,clk-period = <10>;
 			xlnx,edk-iptype = "PERIPHERAL";
 			status = "okay";
@@ -38,7 +38,7 @@
 			interrupt-names = "interrupt";
 			xlnx,combinational = <0>;
 			xlnx,s-axi-ctrl-data-width = <32>;
-			xlnx,latency = <167>;
+			xlnx,latency = <178>;
 			xlnx,name = "speakable_cnn_0";
 		};
 	};

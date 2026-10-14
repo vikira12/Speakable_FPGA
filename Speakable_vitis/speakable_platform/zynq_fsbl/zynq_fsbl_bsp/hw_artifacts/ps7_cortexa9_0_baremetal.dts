@@ -805,13 +805,13 @@
                         phandle = <0x5>;
                         interrupts = <0x0 0x1d 0x4>;
                         compatible = "xlnx,speakable-cnn-top-1.0";
-                        xlnx,ii = "168 , ~ , 2589042";
+                        xlnx,ii = "179 , ~ , 2589747";
                         xlnx,machine = <0x40>;
                         interrupt-parent = <&intc>;
                         xlnx,ip-name = "speakable_cnn_top";
                         reg = <0x40000000 0x10000>;
                         clocks = <&clkc 0xf>;
-                        xlnx,s-axi-ctrl-addr-width = <0x7>;
+                        xlnx,s-axi-ctrl-addr-width = <0x8>;
                         xlnx,clk-period = <0xa>;
                         xlnx,edk-iptype = "PERIPHERAL";
                         status = "okay";
@@ -819,7 +819,7 @@
                         interrupt-names = "interrupt";
                         xlnx,combinational = <0x0>;
                         xlnx,s-axi-ctrl-data-width = <0x20>;
-                        xlnx,latency = <0xa7>;
+                        xlnx,latency = <0xb2>;
                         xlnx,name = "speakable_cnn_0";
                 };
         };
