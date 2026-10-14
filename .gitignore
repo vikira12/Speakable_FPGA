@@ -44,3 +44,6 @@ Speakable_vivado/**/*.srcs/utils_1/
 # ---- 학습 패키지 ----
 __pycache__/
 *.pyc
+
+# ---- Claude Code 작업 안내 (로컬 전용) ----
+CLAUDE.md
