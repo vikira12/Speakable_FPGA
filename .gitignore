@@ -47,3 +47,7 @@ __pycache__/
 
 # ---- Claude Code 작업 안내 (로컬 전용) ----
 CLAUDE.md
+
+# ---- 테스트 벡터 헤더: AI Hub 음성에서 만든 값이라 공개 저장소에 올리지 않음 (export_c.py, export_frontend_c.py로 PC에서 생성) ----
+speakable_arm_ref/generated/speakable_testvec.h
+speakable_arm_ref/generated/speakable_frontend_testvec.h
