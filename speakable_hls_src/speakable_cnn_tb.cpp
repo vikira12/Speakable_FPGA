@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-// 실제 모델(파일럿) 가중치와 AI 팀 테스트 벡터 (speakable_arm_ref/tools/export_c.py로 생성)
+// 실제 모델 가중치와 테스트 벡터 (학습 산출물 → speakable_arm_ref/tools/export_c.py로 생성)
 #include "../speakable_arm_ref/generated/speakable_weights.h"
 #include "../speakable_arm_ref/generated/speakable_testvec.h"
 
@@ -12,7 +12,7 @@
 // 테스트벤치
 //  1) 레이어 종류·stride·크기를 바꿔 가며 하드웨어 함수 결과를 골든 모델과 바이트 단위 비교
 //     (유효 영역 밖을 덮어쓰지 않는지, 이전 레이어 잔여값이 새지 않는지도 확인)
-//  2) 파일럿 모델 L1~L9를 하드웨어 함수로 연결 실행해 AI 팀 정수 PyTorch 출력과 비교
+//  2) 실제 모델 L1~L9를 하드웨어 함수로 연결 실행해 학습 쪽 정수 추론 출력(테스트 벡터)과 비교
 // ----------------------------------------------------------------------
 
 static const int8_t SENTINEL = 0x5A;
@@ -189,7 +189,7 @@ static bool run_case(const case_t &t) {
 }
 
 // ----------------------------------------------------------------------
-// 2) 파일럿 모델 L1~L9 연결 실행 (DDR 버퍼를 그대로 다음 레이어 입력으로 사용)
+// 2) 실제 모델 L1~L9 연결 실행 (DDR 버퍼를 그대로 다음 레이어 입력으로 사용)
 // ----------------------------------------------------------------------
 struct model_layer_t {
     int type, in_c, in_h, in_w, out_c, stride;
@@ -244,8 +244,8 @@ static bool run_model() {
 
             word_t *t = in; in = out; out = t;
         }
-        std::cout << (bad_layers ? "  [FAIL] " : "  [PASS] ") << "파일럿 모델 tv" << tv
-                  << " | L1~L9 하드웨어 출력이 AI 팀 정수 PyTorch 출력과 " << (bad_layers ? "불일치" : "모두 일치")
+        std::cout << (bad_layers ? "  [FAIL] " : "  [PASS] ") << "모델 tv" << tv
+                  << " | L1~L9 하드웨어 출력이 학습 쪽 정수 추론 출력과 " << (bad_layers ? "불일치" : "모두 일치")
                   << " | 연산 사이클 합 " << cycles << std::endl;
         all_ok = all_ok && bad_layers == 0;
     }
@@ -273,7 +273,7 @@ int main() {
     int n_fail = 0, n_case = 0;
     std::cout << "== 레이어 단위 테스트" << std::endl;
     for (const case_t &t : cases) { n_case++; if (!run_case(t)) n_fail++; }
-    std::cout << "== 파일럿 모델 연결 실행 (L1~L9)" << std::endl;
+    std::cout << "== 실제 모델 연결 실행 (L1~L9)" << std::endl;
     n_case++;
     if (!run_model()) n_fail++;
 

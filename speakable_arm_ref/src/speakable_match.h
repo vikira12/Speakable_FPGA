@@ -35,8 +35,8 @@ typedef struct {
     float adapt_min_sim;          // 적응 반영 하한 (대표 벡터 cosine)
 } spk_match_params_t;
 
-// AI 팀 보정 전 임시값 (작품소개서 예시 기준). 실제 사용 전 반드시 교체
-extern const spk_match_params_t SPK_MATCH_PARAMS_PLACEHOLDER;
+// 기기에서 쓰는 값 (학습 산출물 matching_params.json으로 보정). 모델을 바꾸면 같이 교체
+extern const spk_match_params_t SPK_MATCH_PARAMS;
 
 typedef struct {
     int     id;                                   // 서버의 표현 ID

@@ -67,7 +67,8 @@ gcc -std=c99 -O2 -Isrc -Igenerated src/speakable_frontend.c src/speakable_model.
 gcc -std=c99 -O2 -Isrc src/speakable_match.c src/speakable_match_test.c -lm -o match_test
 ```
 
-매칭 파라미터(`SPK_MATCH_PARAMS_PLACEHOLDER`)는 AI 팀 보정 전 임시값이다. Threshold·Margin·즉시 출력 기준이 확정되면 교체한다.
+매칭 파라미터 `SPK_MATCH_PARAMS`(`src/speakable_match.c`)는 학습 산출물의 `matching_params.json`(검증셋 보정값)으로 정한다.
+모델을 바꾸면 같이 교체한다. 단위 테스트(`speakable_match_test.c`)는 판정 규칙 시험용 고정값 `TEST_PARAMS`를 쓴다.
 
 FPGA 가속 보드 검증: Vitis 앱 `src/`에 `speakable_model.c/.h`, `speakable_fpga.c/.h`, `speakable_fpga_test.c`와
 `generated/speakable_weights.h`, `generated/speakable_testvec.h`를 넣는다. 레이어별 출력을 테스트 벡터와 비교하고

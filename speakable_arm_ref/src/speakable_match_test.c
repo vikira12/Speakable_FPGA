@@ -12,6 +12,13 @@ static int n_check = 0, n_fail = 0;
 
 static spk_matcher_t M;   // 약 90KB라 정적 할당
 
+// 판정 규칙 시험용 고정값 (기기 값 SPK_MATCH_PARAMS가 바뀌어도 시험의 기하 조건이 유지되게)
+static const spk_match_params_t TEST_PARAMS = {
+    .alpha = 0.70f, .threshold = 0.70f, .margin = 0.10f,
+    .immediate_threshold = -1.0f, .immediate_margin = 0.0f,   // 즉시 출력 비활성에서 시작
+    .conflict_threshold = 0.90f, .adapt_min_sim = 0.50f,
+};
+
 // 축 a 방향에서 축 b 쪽으로 deg도 기운 단위 벡터
 static void dir(float *v, int a, int b, float deg) {
     memset(v, 0, sizeof(float) * SPK_EMB_DIM);
@@ -36,7 +43,7 @@ int main(void) {
     float s[SPK_MAX_SAMPLES][SPK_EMB_DIM], q[SPK_EMB_DIM];
     spk_decision_t r;
     int conflict = -1;
-    spk_match_params_t p = SPK_MATCH_PARAMS_PLACEHOLDER;
+    spk_match_params_t p = TEST_PARAMS;
 
     // ---- 등록 전 ----
     spk_match_init(&M, &p);
@@ -101,10 +108,10 @@ int main(void) {
     r = spk_match_decide(&M, q);
     CHECK(r.s1 - r.s2 >= p.margin, "(전제) 1·2위 차이는 Margin 이상");
     CHECK(r.type == SPK_DECIDE_CANDIDATES && r.why == SPK_WHY_ALWAYS_CONFIRM, "차이가 커도 혼동 표현이면 후보로 표시");
-    p = SPK_MATCH_PARAMS_PLACEHOLDER;
+    p = TEST_PARAMS;
 
     // ---- 즉시 출력: 사용자가 허용 + 엄격한 기준 통과일 때만 ----
-    spk_match_init(&M, &p);                       // 임시값: 즉시 출력 비활성
+    spk_match_init(&M, &p);                       // 즉시 출력 비활성
     cluster(s, 5, 3, 4, 2.0f);
     spk_match_register(&M, 500, s, 5, 1, 0);
     cluster(s, 5, 5, 6, 2.0f);
@@ -126,7 +133,7 @@ int main(void) {
     CHECK(r.type == SPK_DECIDE_CONFIRM_ONE && r.cand_id[0] == 600, "즉시 출력을 허용하지 않은 표현 → 확인 후 출력");
 
     // ---- 확인 기반 적응 ----
-    p = SPK_MATCH_PARAMS_PLACEHOLDER;
+    p = TEST_PARAMS;
     spk_match_init(&M, &p);
     cluster(s, 5, 0, 1, 3.0f);
     spk_match_register(&M, 100, s, 5, 0, 0);
@@ -158,6 +165,17 @@ int main(void) {
         spk_match_register(&M, 1000 + k, s, 1, 0, 0);
     }
     CHECK(spk_match_register(&M, 9999, s, 1, 0, 0) == SPK_REG_FULL, "표현 수 초과");
+
+    // ---- 기기 값(SPK_MATCH_PARAMS) 범위 ----
+    {
+        const spk_match_params_t d = SPK_MATCH_PARAMS;
+        CHECK(d.alpha >= 0.0f && d.alpha <= 1.0f, "기기 값: 0 ≤ α ≤ 1");
+        CHECK(d.threshold > 0.0f && d.threshold < 1.0f && d.margin > 0.0f && d.margin < 1.0f, "기기 값: 0 < T, M < 1");
+        CHECK(d.immediate_threshold < 0.0f ||
+              (d.immediate_threshold >= d.threshold && d.immediate_margin >= d.margin), "기기 값: 즉시 출력 기준이 일반 기준보다 엄격");
+        CHECK(d.conflict_threshold > 0.0f && d.conflict_threshold < 1.0f && d.adapt_min_sim > 0.0f && d.adapt_min_sim < 1.0f,
+              "기기 값: 혼동·적응 기준 0~1");
+    }
 
     printf("%s 매칭·판정 단위 테스트 %d/%d\r\n", n_fail ? "[FAIL]" : "[PASS]", n_check - n_fail, n_check);
     return n_fail ? 1 : 0;

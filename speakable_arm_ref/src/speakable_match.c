@@ -2,14 +2,15 @@
 #include <math.h>
 #include <string.h>
 
-const spk_match_params_t SPK_MATCH_PARAMS_PLACEHOLDER = {
-    .alpha               = 0.70f,    // matching_params.json 초기값 (최적화 전)
-    .threshold           = 0.70f,    // 작품소개서 예시값
-    .margin              = 0.10f,    // 작품소개서 예시값
-    .immediate_threshold = -1.0f,    // 보정 전에는 즉시 출력 비활성
-    .immediate_margin    = 0.0f,
-    .conflict_threshold  = 0.90f,
-    .adapt_min_sim       = 0.50f,
+// speakable_v02 matching_params.json (검증셋 화자, INT8 임베딩, 표현당 최대 5개 등록으로 보정)
+const spk_match_params_t SPK_MATCH_PARAMS = {
+    .alpha               = 0.50f,
+    .threshold           = 0.65f,    // 보정값은 0 (거절 없음). 등록 표현 오거절 1%로 미등록 표현 15%를 거절하도록 올림
+    .margin              = 0.15f,
+    .immediate_threshold = 0.88f,    // 확실·오답 0.1% 이하가 되는 엄격한 기준
+    .immediate_margin    = 0.19f,
+    .conflict_threshold  = 0.77f,    // 같은 화자의 서로 다른 표현 대표 벡터 cosine 95백분위
+    .adapt_min_sim       = 0.63f,    // 자기 표현 대표 벡터와의 cosine 2백분위
 };
 
 static float dot(const float *a, const float *b) {
