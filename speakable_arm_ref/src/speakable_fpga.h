@@ -17,7 +17,8 @@
 
 #define SPK_FPGA_LAYERS 9
 
-// 0: 성공, −1: IP 초기화 실패
+// 0: 성공, −1: IP(레지스터) 초기화 실패 (Linux: 이름이 speakable_cnn_top인 UIO 장치 없음)
+// Linux 전용: −2: DDR 버퍼(UIO map1) 매핑 실패, −3: 버퍼 영역이 필요한 크기보다 작음
 int spk_fpga_init(uintptr_t base_addr);
 
 // hook: 레이어마다 출력([C][H][W], 패딩 없이)을 받아 검증할 때 사용 (필요 없으면 NULL)
